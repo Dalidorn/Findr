@@ -8,7 +8,6 @@ var user = {
 var setupSubmitBtn = document.querySelector("#setupSubmit");
 var recipeFavBtn = document.querySelector("#recipeFav");
 var recipeNextBtn = document.querySelector("#recipeNext");
-var recipeMoreBtn = document.querySelector("#recipeMore");
 var favLinkBtn = document.querySelector("#favLink");
 var editDPBtn = document.querySelector("#editDP");
 var editDP2Btn = document.querySelector("#editDP2");
@@ -19,6 +18,7 @@ var displayWelcome = document.querySelector(".displayWelcome");
 var displayRecipeSwiper = document.querySelector(".displayRecipeSwiper");
 var displayFavorites = document.querySelector(".displayFavorites");
 var detailsBlock = document.querySelector("#detailsBlock");
+var recipeCard = document.querySelector("#recipeDisplay");
 
 //nav menus
 var toggleMenu = document.querySelector("#toggleMenu");
@@ -93,15 +93,15 @@ function favRecipe() {
   nextRecipe();
 };
 
-function showRecipeDetails(event) {
-  if(event.target.className == "inactive") {
-    event.target.className = "active";
+function showRecipeDetails() {
+  if(detailsBlock.className == "invisible") {
     detailsBlock.className = "";
   } else {
-    event.target.className = "inactive";
     detailsBlock.className = "invisible"
   };
 };
+
+//---DRAG AND DROP FUNCTIONALITY---
 
 
 //---EVENT LISTENERS---
@@ -119,7 +119,7 @@ toggleMenu.addEventListener("click", toggleActive);
 //recipe card buttons
 recipeFavBtn.addEventListener("click", favRecipe);
 recipeNextBtn.addEventListener("click", nextRecipe);
-recipeMoreBtn.addEventListener("click", showRecipeDetails);
+recipeCard.addEventListener("dblclick", showRecipeDetails);
 
 //recipe page nav
 favLinkBtn.addEventListener("click", showFavoritesPage);
