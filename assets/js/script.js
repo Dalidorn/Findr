@@ -1,7 +1,9 @@
 //---GLOBAL VARIABLES---
+var user = {
+  username: ""
+}
 
 //---ELEMENT SELECTORS---
-
 //buttons
 var setupSubmitBtn = document.querySelector("#setupSubmit");
 var recipeFavBtn = document.querySelector("#recipeFav");
@@ -22,9 +24,12 @@ var detailsBlock = document.querySelector("#detailsBlock");
 var toggleMenu = document.querySelector("#toggleMenu");
 var sortFavMenu = document.querySelector("#sortFav");
 
+//input fields
+var usernameInput = document.querySelector("#usernameInput");
+
 //---LOCAL STORAGE CHECK---
 if(localStorage) {
-  console.log("Local Storage Detected");
+  //potential to show a modal if local storage is detected for easy clearing.
   //TODO: Add code for what to do if the user already has stored data.
 }
 
@@ -103,6 +108,8 @@ function showRecipeDetails(event) {
 //welcome page
 setupSubmitBtn.addEventListener("click", function(event) {
   event.preventDefault();
+  user.username = usernameInput.value;
+  console.log(user.username);
   showRecipeSwiper();
 });
 

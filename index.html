@@ -11,6 +11,12 @@
 
 <body>
     <div class="backgroundGradient">
+        <section class="displayWarning hidden">
+            <h2>Warning! This app uses local storage for it's memory.</h2>
+            <button>I've been here before. (continue with what exists)</button>
+            <button>It's my first time visiting. (clear and refresh)</button>
+        </section>
+        
         <section class="displayWelcome">
             <header>
                 <h1 id="welcomeMessage">Welcome to Finder</h1>
@@ -20,7 +26,7 @@
                 <section>
                     <form>
                         <h2>Choose a username and select any dietary preferences below.</h2>
-                        <input type="text" name="username" placeholder="Username">
+                        <input type="text" name="username" placeholder="Username" id="usernameInput">
                         <ul class="dietaryRestrictions">
                             <li><p>Vegan:</p><input type="checkbox" name="veganSelector"></li>
                             <li><p>Vegetarian:</p><input type="checkbox" name="vegetarianSelector"></li>
