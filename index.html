@@ -6,11 +6,114 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/reset.css">
     <link rel="stylesheet" href="./assets/css/style.css">
-    <title>Document</title>
+    <title>Finder</title>
 </head>
-<body>
-    <div id="myData"></div>
 
+<body>
+    <div class="backgroundGradient">
+        <section class="displayWarning hidden">
+            <h2>Warning! This app uses local storage for it's memory.</h2>
+            <button>I've been here before. (continue with what exists)</button>
+            <button>It's my first time visiting. (clear and refresh)</button>
+        </section>
+        
+        <section class="displayWelcome">
+            <header>
+                <h1 id="welcomeMessage">Welcome to Finder</h1>
+            </header>
+
+            <main class="displaySetup">
+                <section>
+                    <form>
+                        <h2>Choose a username and select any dietary preferences below.</h2>
+                        <input type="text" name="username" placeholder="Username" id="usernameInput">
+                        <ul class="dietaryRestrictions">
+                            <li><p>Vegan:</p><input type="checkbox" name="veganSelector"></li>
+                            <li><p>Vegetarian:</p><input type="checkbox" name="vegetarianSelector"></li>
+                        </ul>
+                        <button id="setupSubmit">Submit</button>
+                    </form>
+                </section>
+            </main>
+
+            <footer>
+
+            </footer>
+        </section>
+
+        <section class="displayRecipeSwiper hidden">
+            <!-- this is where the selectors for meal type will go -->
+            <header>
+                <ui id="toggleMenu">
+                    <button class="inactive">Breakfast</button>
+                    <button class="inactive">Lunch</button>
+                    <button class="inactive">Dinner</button>
+                    <button class="inactive">Dessert</button>
+                </ui>
+            </header>
+
+            <main class="recipeBlock">
+                <card id="recipeDisplay">
+                    <h2 id="recipeTitle">RECIPE NAME</h2>
+
+                <!-- hide and display this div when more info is called -->
+                    <div id="detailsBlock" class="invisible">
+                        <h3>Ingredients List</h3>
+                        <ul>
+                            <li>Apple</li>
+                            <li>Banana</li>
+                            <li>Carrot</li>
+                        </ul>
+                    
+                        <h3>Recipe Summary</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit nam iure possimus voluptas eum aliquid veritatis numquam, voluptate, facere ad eius modi? Aliquam nihil sunt est odio quis sed eius!</p>
+                    </div>
+
+                    <div>
+                        <button id="recipeFav">Fav</button>
+                        <button id="recipeNext">Next</button>
+                        <button id="recipeMore" class="inactive">More Info</button>
+                    </div>
+                </card>
+            </main>
+
+            <footer>
+                <nav>
+                    <ui>
+                        <button id="favLink">Favorites</button>
+                        <button id="editDP">Edit Dietary Preferences</button>
+                    </ui>
+                </nav>
+            </footer>
+        </section>
+
+        <section class="displayFavorites hidden">
+            <header>
+                <h2>Favorites List</h2>
+                <ui id="sortFav">
+                    <button class="inactive" id="breakfast">Breakfast</button>
+                    <button class="inactive" id="lunch">Lunch</button>
+                    <button class="inactive" id="dinner">Dinner</button>
+                    <button class="inactive" id="dessert">Dessert</button>
+                </ui>
+            </header>
+
+            <main>
+                <section>
+
+                </section>
+            </main>
+
+            <footer>
+                <nav>
+                    <ui>
+                        <button id="recLink">Recipes</button>
+                        <button id="editDP2">Edit Preferences</button>
+                    </ui>
+                </nav>
+            </footer>
+        </section>
+    </div>
     <script src="./assets/js/script.js"></script>
 </body>
 </html>

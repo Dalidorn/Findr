@@ -1,40 +1,180 @@
-var tags = 'breakfast, dinner'
-var spoonURL = 'https://api.spoonacular.com/recipes/random?apiKey=cc3888f8468f4f98a6465b665303b10b&number=100&tags='+tags
-var headers = {}
-
-function appendData(data){
-  var mainContainer = document.getElementById("myData")
-  for (var i=0; i<data.length; i++){
-    var div = document.createElement("div")
-    div.innerHTML = data[i].title
-    mainContainer.appendChild(div);
-  }
+//---GLOBAL VARIABLES---
+var user = {
+  username: ""
 }
 
-fetch(spoonURL, {
-  mode: 'cors',
-  method: 'GET', //GET is the default.
-  headers: headers
-})
-  .then(function (response) {
-    return response.json();
+//---ELEMENT SELECTORS---
+//buttons
+var setupSubmitBtn = document.querySelector("#setupSubmit");
+var recipeFavBtn = document.querySelector("#recipeFav");
+var recipeNextBtn = document.querySelector("#recipeNext");
+var recipeMoreBtn = document.querySelector("#recipeMore");
+var favLinkBtn = document.querySelector("#favLink");
+var editDPBtn = document.querySelector("#editDP");
+var editDP2Btn = document.querySelector("#editDP2");
+var recLinkBtn = document.querySelector("#recLink");
+
+//pages
+var displayWelcome = document.querySelector(".displayWelcome");
+var displayRecipeSwiper = document.querySelector(".displayRecipeSwiper");
+var displayFavorites = document.querySelector(".displayFavorites");
+var detailsBlock = document.querySelector("#detailsBlock");
+
+//nav menus
+var toggleMenu = document.querySelector("#toggleMenu");
+var sortFavMenu = document.querySelector("#sortFav");
+var breakButton = document.querySelector("#breakfast");
+var lunButton = document.querySelector("#lunch");
+var dinButton = document.querySelector("#dinner");
+var dessButton = document.querySelector("#dessert");
+//input fields
+var usernameInput = document.querySelector("#usernameInput");
+
+//---LOCAL STORAGE CHECK---
+if(localStorage) {
+  //potential to show a modal if local storage is detected for easy clearing.
+  //TODO: Add code for what to do if the user already has stored data.
+}
+
+//Jake Code
+var tags = []
+var spoonURL = 'https://api.spoonacular.com/recipes/random?apiKey=cc3888f8468f4f98a6465b665303b10b&number=100&tags='
+var headers = {}
+var titleContainer = document.querySelector("#recipeTitle")
+var ingrContainer = document.getElementById("detailsBlock")
+var fetchResponse = ''
+
+
+if (breakButton.className="active"){
+  tags.push("breakfast,")
+} else if (lunButton.className="active"){
+  tags.push("lunch,")
+} else if (dinButton.className="active"){
+  tags.push("dinner,")
+} else if (dessButton.className="active"){
+  tags.push("dessert")
+}
+for (var i=0; i<tags.length; i++){
+  spoonURL = spoonURL + tags[i]
+}
+
+//---GENERAL FUNCTIONS---
+function hide(variable) {
+  variable.className += " hidden";
+};
+
+function show(variable) {
+  variable.className -= " hidden";
+};
+
+function toggleActive(event) {
+  if(event.target.className != "") {
+    if(event.target.className == "inactive") {
+    event.target.className = "active";
+    } else {
+    event.target.className = "inactive";
+    };
+  };
+};
+
+//---PAGE DISPLAY FUNCTIONS---
+function showWelcomePage() {
+  if(!displayRecipeSwiper.className.includes("hidden")) {
+    hide(displayRecipeSwiper);
+  };
+  if(!displayFavorites.className.includes("hidden")) {
+    hide(displayFavorites)
+  };
+  show(displayWelcome);
+};
+
+function showRecipeSwiper() {
+  if(!displayWelcome.className.includes("hidden")) {
+    hide(displayWelcome);
+  };
+  if(!displayFavorites.className.includes("hidden")) {
+    hide(displayFavorites)
+  };
+  show(displayRecipeSwiper);
+};
+
+function showFavoritesPage() {
+  if(!displayRecipeSwiper.className.includes("hidden")) {
+    hide(displayRecipeSwiper);
+  };
+  if(!displayWelcome.className.includes("hidden")) {
+    hide(displayRecipeSwiper)
+  };
+  show(displayFavorites);
+};
+
+
+function fetchRecipe (){
+
+  fetch(spoonURL, {
+    mode: 'cors',
+    method: 'GET', //GET is the default.
+    headers: headers
   })
-  .then(function (data) {
-    console.log(data);
-  });
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      fetchResponse=data
+    });
+}
+
+var recipeIncr = 0
+var currentRec = fetchResponse.recipe.recipeIncr
 
 
-// function getParams() {
-//   // Get the search params out of the URL (i.e. `?q=london&format=photo`) and convert it to an array (i.e. ['?q=london', 'format=photo'])
-//   var searchParamsArr = document.location.search.split('&');
-  
-//   // Get the query and format values
-//   var query = searchParamsArr[0].split('=').pop();
-//   var format = searchParamsArr[1].split('=').pop();
-  
-//   searchApi(query, format);
-// }
-
-// Crispy Italian Cauliflower Poppers Appetizer might be just the hor d'oeuvre you are searching for. One serving contains <b>472 calories</b>, <b>21g of protein</b>, and <b>17g of fat</b>. For <b>$2.01 per serving</b>, this recipe <b>covers 29%</b> of your daily requirements of vitamins and minerals. If you have canned tomatoes, flour, olive oil, and a few other ingredients on hand, you can make it. 84 people have tried and liked this recipe. This recipe is typical of Mediterranean cuisine. From preparation to the plate, this recipe takes roughly <b>45 minutes</b>. All things considered, we decided this recipe <b>deserves a spoonacular score of 92%</b>. This score is spectacular. Try <a href="https://spoonacular.com/recipes/crispy-baked-cauliflower-poppers-912014">Crispy Baked Cauliflower Poppers</a>, <a href="https://spoonacular.com/recipes/crispy-shrimp-poppers-449327">Crispy Shrimp Poppers</a>, and <a href="https://spoonacular.com/recipes/cauliflower-poppers-560125">Cauliflower Poppers</a> for similar recipes.
 
 
+//---RECIPE CARD FUNCTIONS---
+function nextRecipe() {
+  recipeIncr ++
+};
+
+function favRecipe() {
+  //TODO: Add code to save the currently displayed recipe to local storage. Store entire recipe from get request so we can access those details later.
+  nextRecipe();
+};
+
+function showRecipeDetails(event) {
+  if(event.target.className == "inactive") {
+    event.target.className = "active";
+    detailsBlock.className = "";
+  } else {
+    event.target.className = "inactive";
+    detailsBlock.className = "invisible"
+  };
+};
+
+
+//---EVENT LISTENERS---
+//welcome page
+setupSubmitBtn.addEventListener("click", function(event) {
+  event.preventDefault();
+  user.username = usernameInput.value;
+  console.log(user.username);
+  showRecipeSwiper();
+});
+
+//recipe card meal type restrictor
+toggleMenu.addEventListener("click", toggleActive);
+
+//recipe card buttons
+recipeFavBtn.addEventListener("click", favRecipe);
+recipeNextBtn.addEventListener("click", nextRecipe);
+recipeMoreBtn.addEventListener("click", showRecipeDetails);
+
+//recipe page nav
+favLinkBtn.addEventListener("click", showFavoritesPage);
+editDPBtn.addEventListener("click", showWelcomePage);
+
+//favorites sorting
+sortFavMenu.addEventListener("click", toggleActive);
+
+//favorites page nav
+editDP2Btn.addEventListener("click", showWelcomePage);
+recLinkBtn.addEventListener("click", showRecipeSwiper);
