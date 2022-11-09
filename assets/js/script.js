@@ -23,7 +23,10 @@ var recipeCard = document.querySelector("#recipeDisplay");
 //nav menus
 var toggleMenu = document.querySelector("#toggleMenu");
 var sortFavMenu = document.querySelector("#sortFav");
-
+var breakButton = document.querySelector("#breakfast");
+var lunButton = document.querySelector("#lunch");
+var dinButton = document.querySelector("#dinner");
+var dessButton = document.querySelector("#dessert");
 //input fields
 var usernameInput = document.querySelector("#usernameInput");
 
@@ -31,6 +34,28 @@ var usernameInput = document.querySelector("#usernameInput");
 if(localStorage) {
   //potential to show a modal if local storage is detected for easy clearing.
   //TODO: Add code for what to do if the user already has stored data.
+}
+
+//Jake Code
+var tags = []
+var spoonURL = 'https://api.spoonacular.com/recipes/random?apiKey=cc3888f8468f4f98a6465b665303b10b&number=100&tags='
+var headers = {}
+var titleContainer = document.querySelector("#recipeTitle")
+var ingrContainer = document.getElementById("detailsBlock")
+var fetchResponse = ''
+
+
+if (breakButton.className="active"){
+  tags.push("breakfast,")
+} else if (lunButton.className="active"){
+  tags.push("lunch,")
+} else if (dinButton.className="active"){
+  tags.push("dinner,")
+} else if (dessButton.className="active"){
+  tags.push("dessert")
+}
+for (var i=0; i<tags.length; i++){
+  spoonURL = spoonURL + tags[i]
 }
 
 //---GENERAL FUNCTIONS---
@@ -83,9 +108,31 @@ function showFavoritesPage() {
   show(displayFavorites);
 };
 
+
+function fetchRecipe (){
+
+  fetch(spoonURL, {
+    mode: 'cors',
+    method: 'GET', //GET is the default.
+    headers: headers
+  })
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      fetchResponse=data
+    });
+}
+
+var recipeIncr = 0
+var currentRec = fetchResponse.recipe.recipeIncr
+
+
+
+
 //---RECIPE CARD FUNCTIONS---
 function nextRecipe() {
-  //TODO: Add code to move to the next response from the get request response.
+  recipeIncr ++
 };
 
 function favRecipe() {
