@@ -98,6 +98,7 @@ function favRecipe() {
         summary:summary.innerHTML
     }
     console.log(recipe)
+    console.log(ingredientsli)
     recipes.push(recipe)
   //TODO: Add code to save the currently displayed recipe to local storage. Store entire recipe from get request so we can access those details later.
   localStorage.setItem("favoriterecipes", JSON.stringify(recipes));
