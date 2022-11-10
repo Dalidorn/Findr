@@ -30,6 +30,9 @@
                         <ul class="dietaryRestrictions">
                             <li><p>Vegan:</p><input type="checkbox" name="veganSelector"></li>
                             <li><p>Vegetarian:</p><input type="checkbox" name="vegetarianSelector"></li>
+                            <li><p>Dairy Free</p><input type="checkbox" name="dairySelector"></li>
+                            <li><p>Gluten Free</p><input type="checkbox" name="glutenSelector"></li>
+                            <li><p>Keto Friendly</p><input type="checkbox" name="ketoSelector"></li>
                         </ul>
                         <button id="setupSubmit">Submit</button>
                     </form>
@@ -51,30 +54,33 @@
                     <button class="inactive">Dessert</button>
                 </ui>
             </header>
-
+            
             <main class="recipeBlock">
-                <card id="recipeDisplay">
+                <figure class="dropNext">NEXT</figure>
+
+                <card id="recipeDisplay" class="draggable">
                     <h2 id="recipeTitle">RECIPE NAME</h2>
 
                 <!-- hide and display this div when more info is called -->
                     <div id="detailsBlock" class="invisible">
                         <h3>Ingredients List</h3>
-                        <ul>
+                        <ul id="ingredients">
                             <li>Apple</li>
                             <li>Banana</li>
                             <li>Carrot</li>
                         </ul>
                     
                         <h3>Recipe Summary</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit nam iure possimus voluptas eum aliquid veritatis numquam, voluptate, facere ad eius modi? Aliquam nihil sunt est odio quis sed eius!</p>
+                        <p id="summary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit nam iure possimus voluptas eum aliquid veritatis numquam, voluptate, facere ad eius modi? Aliquam nihil sunt est odio quis sed eius!</p>
                     </div>
 
                     <div>
                         <button id="recipeFav">Fav</button>
                         <button id="recipeNext">Next</button>
-                        <button id="recipeMore" class="inactive">More Info</button>
                     </div>
                 </card>
+
+                <figure class="dropFav">FAVORITE</figure>
             </main>
 
             <footer>
@@ -114,6 +120,12 @@
             </footer>
         </section>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
+
+
+
+
