@@ -44,7 +44,6 @@ var titleContainer = document.querySelector("#recipeTitle")
 var ingrContainer = document.getElementById("detailsBlock")
 var fetchResponse = ''
 
-
 if (breakButton.className="active"){
   tags.push("breakfast,")
 } else if (lunButton.className="active"){
@@ -108,7 +107,6 @@ function showFavoritesPage() {
   show(displayFavorites);
 };
 
-
 function fetchRecipe (){
 
   fetch(spoonURL, {
@@ -125,10 +123,7 @@ function fetchRecipe (){
 }
 
 var recipeIncr = 0
-var currentRec = fetchResponse.recipe.recipeIncr
-
-
-
+var currentRec = fetchResponse.recipe[recipeIncr]
 
 //---RECIPE CARD FUNCTIONS---
 function nextRecipe() {
@@ -149,7 +144,6 @@ function showRecipeDetails(event) {
     detailsBlock.className = "invisible"
   };
 };
-
 
 //---EVENT LISTENERS---
 //welcome page
