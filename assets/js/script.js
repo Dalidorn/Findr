@@ -19,6 +19,9 @@ var favLinkBtn = document.querySelector("#favLink");
 var editDPBtn = document.querySelector("#editDP");
 var editDP2Btn = document.querySelector("#editDP2");
 var recLinkBtn = document.querySelector("#recLink");
+var ingredientsli = document.querySelector("#ingredients").getElementsByTagName("li")
+var summary = document.querySelector("#summary")
+
 
 //pages
 var displayWelcome = document.querySelector(".displayWelcome");
@@ -144,7 +147,15 @@ function nextRecipe() {
 };
 
 function favRecipe() {
+    var recipes=[]
+    var recipe={
+        ingredients:[ingredientsli[0].innerHTML,ingredientsli[1].innerHTML,ingredientsli[2].innerHTML],
+        summary:summary.innerHTML
+    }
+    console.log(recipe)
+    recipes.push(recipe)
   //TODO: Add code to save the currently displayed recipe to local storage. Store entire recipe from get request so we can access those details later.
+  localStorage.setItem("favoriterecipes", JSON.stringify(recipes));
   nextRecipe();
 };
 
