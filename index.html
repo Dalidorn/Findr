@@ -30,6 +30,9 @@
                         <ul class="dietaryRestrictions">
                             <li><p>Vegan:</p><input type="checkbox" name="veganSelector"></li>
                             <li><p>Vegetarian:</p><input type="checkbox" name="vegetarianSelector"></li>
+                            <li><p>Dairy Free</p><input type="checkbox" name="dairySelector"></li>
+                            <li><p>Gluten Free</p><input type="checkbox" name="glutenSelector"></li>
+                            <li><p>Keto Friendly</p><input type="checkbox" name="ketoSelector"></li>
                         </ul>
                         <button id="setupSubmit">Submit</button>
                     </form>
@@ -51,10 +54,12 @@
                     <button class="inactive">Dessert</button>
                 </ui>
             </header>
-
+            
             <main class="recipeBlock">
-                <card id="recipeDisplay">
-                    <h2>RECIPE NAME</h2>
+                <figure class="dropNext">NEXT</figure>
+
+                <card id="recipeDisplay" class="draggable">
+                    <h2 id="recipeTitle">RECIPE NAME</h2>
 
                 <!-- hide and display this div when more info is called -->
                     <div id="detailsBlock" class="invisible">
@@ -72,9 +77,10 @@
                     <div>
                         <button id="recipeFav">Fav</button>
                         <button id="recipeNext">Next</button>
-                        <button id="recipeMore" class="inactive">More Info</button>
                     </div>
                 </card>
+
+                <figure class="dropFav">FAVORITE</figure>
             </main>
 
             <footer>
@@ -91,10 +97,10 @@
             <header>
                 <h2>Favorites List</h2>
                 <ui id="sortFav">
-                    <button class="inactive">Breakfast</button>
-                    <button class="inactive">Lunch</button>
-                    <button class="inactive">Dinner</button>
-                    <button class="inactive">Dessert</button>
+                    <button class="inactive" id="breakfast">Breakfast</button>
+                    <button class="inactive" id="lunch">Lunch</button>
+                    <button class="inactive" id="dinner">Dinner</button>
+                    <button class="inactive" id="dessert">Dessert</button>
                 </ui>
             </header>
 
@@ -114,6 +120,12 @@
             </footer>
         </section>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
+
+
+
+

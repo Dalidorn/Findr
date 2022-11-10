@@ -1,3 +1,8 @@
+* {
+    user-select: none;
+    touch-action: none;
+}
+
 .backgroundGradient {
     display: flex;
     background-image: linear-gradient( #9a8478, 15%, #1e130c);
@@ -21,6 +26,10 @@
     background-color: yellow;
 }
 
+h1 {
+    font-size: 150px;
+}
+
 section {
     display: flex;
     flex-direction: column;
@@ -37,6 +46,11 @@ header {
 main {
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+figure {
+    padding: 200px 50px;
 }
 
 footer {
@@ -58,3 +72,34 @@ card {
     flex-direction: column;
     justify-content: space-between;
 }
+
+
+/* Screen Resizing Effects
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    /* make header and footer hidden for drag effects to reveal */
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    /* make footer hidden for drag effects */
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    /* default */
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    /* more info always displayed */
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    /* more info always displayed and show side bars */
+}
+
+
+
