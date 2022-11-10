@@ -3,6 +3,13 @@ var user = {
   username: ""
 }
 
+//---RECIPE BREAKDOWN---
+
+var currentIngredients = ["Apple", "Banana", "Coconut"];
+var currentDescription = "Random dish";
+var currentImage = "";
+var currentTitle = "This Random Dish";
+
 //---ELEMENT SELECTORS---
 //buttons
 var setupSubmitBtn = document.querySelector("#setupSubmit");
@@ -27,6 +34,7 @@ var breakButton = document.querySelector("#breakfast");
 var lunButton = document.querySelector("#lunch");
 var dinButton = document.querySelector("#dinner");
 var dessButton = document.querySelector("#dessert");
+
 //input fields
 var usernameInput = document.querySelector("#usernameInput");
 
@@ -34,15 +42,15 @@ var usernameInput = document.querySelector("#usernameInput");
 if(localStorage) {
   //potential to show a modal if local storage is detected for easy clearing.
   //TODO: Add code for what to do if the user already has stored data.
-}
+};
 
 //Jake Code
-var tags = []
-var spoonURL = 'https://api.spoonacular.com/recipes/random?apiKey=cc3888f8468f4f98a6465b665303b10b&number=100&tags='
-var headers = {}
-var titleContainer = document.querySelector("#recipeTitle")
-var ingrContainer = document.getElementById("detailsBlock")
-var fetchResponse = ''
+var tags = [];
+var spoonURL = 'https://api.spoonacular.com/recipes/random?apiKey=cc3888f8468f4f98a6465b665303b10b&number=100&tags=';
+var headers = {};
+var titleContainer = document.querySelector("#recipeTitle");
+var ingrContainer = document.getElementById("detailsBlock");
+var fetchResponse = '';
 
 
 if (breakButton.className="active"){
@@ -109,23 +117,23 @@ function showFavoritesPage() {
 };
 
 
-function fetchRecipe (){
+// function fetchRecipe (){
 
-  fetch(spoonURL, {
-    mode: 'cors',
-    method: 'GET', //GET is the default.
-    headers: headers
-  })
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      fetchResponse=data
-    });
-}
+//   fetch(spoonURL, {
+//     mode: 'cors',
+//     method: 'GET', //GET is the default.
+//     headers: headers
+//   })
+//     .then(function (response) {
+//       return response.json();
+//     })
+//     .then(function (data) {
+//       fetchResponse=data
+//     });
+// };
 
-var recipeIncr = 0
-var currentRec = fetchResponse.recipe.recipeIncr
+// var recipeIncr = 0;
+// var currentRec = fetchResponse.recipe.recipeIncr
 
 
 
@@ -149,7 +157,55 @@ function showRecipeDetails() {
 };
 
 //---DRAG AND DROP FUNCTIONALITY---
+const position = { x: 0, y: 0 };
+var object = interact(".draggable");
 
+
+object.draggable({
+  listeners: {
+    start (event) {
+      console.log(event.type)
+      event.target.style.transition = "";
+    },
+    move (event) {
+      position.x += event.dx
+      position.y += event.dy
+
+      event.target.style.transform =
+        `translate(${position.x}px, ${position.y}px)`
+    },
+  },
+  inertia: true,
+  modifiers: [
+    interact.modifiers.restrictRect({
+      restriction: 'parent'
+    })
+  ],
+})
+
+interact(".dropFav")
+  .dropzone({
+    ondrop: function (event) {
+      event.relatedTarget.style.transition = "transform 0.5s";
+      console.log(event.relatedTarget.id + ' was dropped into ' + event.target.className)
+      position.x = 0;
+      position.y = 0;
+      event.relatedTarget.style.transform = `translate(${position.x}px, ${position.y}px)`;
+    },
+    overlap: 0.01,
+  });
+
+interact(".dropNext")
+  .dropzone({
+    ondrop: function (event) {
+      event.relatedTarget.style.transition = "transform 0.5s";
+      console.log(event.relatedTarget.id + ' was dropped into ' + event.target.className)
+      position.x = 0;
+      position.y = 0;
+      event.relatedTarget.style.transform = `translate(${position.x}px, ${position.y}px)`;
+    },
+    overlap: 0.01,
+  });
 
 //---EVENT LISTENERS---
 //welcome page

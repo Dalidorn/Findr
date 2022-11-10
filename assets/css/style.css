@@ -26,6 +26,10 @@
     background-color: yellow;
 }
 
+h1 {
+    font-size: 150px;
+}
+
 section {
     display: flex;
     flex-direction: column;
@@ -42,6 +46,11 @@ header {
 main {
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+figure {
+    padding: 200px 50px;
 }
 
 footer {
@@ -65,7 +74,7 @@ card {
 }
 
 
-/* Screen Resizing Effects */
+/* Screen Resizing Effects
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
@@ -91,3 +100,6 @@ card {
 @media only screen and (min-width: 1200px) {
     /* more info always displayed and show side bars */
 }
+
+
+
