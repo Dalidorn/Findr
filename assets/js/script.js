@@ -12,7 +12,6 @@ var favLinkBtn = document.querySelector("#favLink");
 var editDPBtn = document.querySelector("#editDP");
 var editDP2Btn = document.querySelector("#editDP2");
 var recLinkBtn = document.querySelector("#recLink");
-var ingredientsli = document.querySelector("#ingredients").getElementsByTagName("li")
 
 //pages
 var displayWelcome = document.querySelector(".displayWelcome");
@@ -32,6 +31,7 @@ var titleContainer = document.querySelector("#recipeTitle");
 var ingrContainer = document.getElementById("detailsBlock");
 var recipeImg = document.querySelector("#recipeImg");
 var summary = document.querySelector("#summary");
+var ingredientsli = document.querySelector("#ingredients");
 
 //input fields
 var usernameInput = document.querySelector("#usernameInput");
@@ -123,9 +123,12 @@ function fetchRecipe (){
       titleContainer.textContent = data.recipes[0].title;
       summary.textContent = data.recipes[0].summary;
       for (var i =0; i<data.recipes[0].extendedIngredients.length; i++){
-        ingredientsli.textContent = data.recipes[0].extendedIngredients[i].name;
+        var list = data.recipes[0].extendedIngredients[i].original;
+        list = document.createElement('li');
+        ingredientsli.appendChild(list);
       }
-      recipeImg.textContent = data.recipes[0].image;
+      recipeImg.src = data.recipes[0].image;
+      console.log(data.recipes[0].spoonacularSourceUrl)
     });
 };
 
