@@ -3,13 +3,6 @@ var user = {
   username: ""
 }
 
-//---RECIPE BREAKDOWN---
-
-var currentIngredients = ["Apple", "Banana", "Coconut"];
-var currentDescription = "Random dish";
-var currentImage = "";
-var currentTitle = "This Random Dish";
-
 //---ELEMENT SELECTORS---
 //buttons
 var setupSubmitBtn = document.querySelector("#setupSubmit");
@@ -20,8 +13,6 @@ var editDPBtn = document.querySelector("#editDP");
 var editDP2Btn = document.querySelector("#editDP2");
 var recLinkBtn = document.querySelector("#recLink");
 var ingredientsli = document.querySelector("#ingredients").getElementsByTagName("li")
-var summary = document.querySelector("#summary")
-
 
 //pages
 var displayWelcome = document.querySelector(".displayWelcome");
@@ -37,6 +28,10 @@ var breakButton = document.querySelector("#breakfast");
 var lunButton = document.querySelector("#lunch");
 var dinButton = document.querySelector("#dinner");
 var dessButton = document.querySelector("#dessert");
+var titleContainer = document.querySelector("#recipeTitle");
+var ingrContainer = document.getElementById("detailsBlock");
+var recipeImg = document.querySelector("#recipeImg");
+var summary = document.querySelector("#summary");
 
 //input fields
 var usernameInput = document.querySelector("#usernameInput");
@@ -46,27 +41,6 @@ if(localStorage) {
   //potential to show a modal if local storage is detected for easy clearing.
   //TODO: Add code for what to do if the user already has stored data.
 };
-
-//Jake Code
-var tags = [];
-var spoonURL = 'https://api.spoonacular.com/recipes/random?apiKey=cc3888f8468f4f98a6465b665303b10b&number=100&tags=';
-var headers = {};
-var titleContainer = document.querySelector("#recipeTitle");
-var ingrContainer = document.getElementById("detailsBlock");
-var fetchResponse = '';
-
-if (breakButton.className="active"){
-  tags.push("breakfast,")
-} else if (lunButton.className="active"){
-  tags.push("lunch,")
-} else if (dinButton.className="active"){
-  tags.push("dinner,")
-} else if (dessButton.className="active"){
-  tags.push("dessert")
-}
-for (var i=0; i<tags.length; i++){
-  spoonURL = spoonURL + tags[i]
-}
 
 //---GENERAL FUNCTIONS---
 function hide(variable) {
@@ -118,31 +92,53 @@ function showFavoritesPage() {
   show(displayFavorites);
 };
 
+function fetchRecipe (){
+  var headers = {};
+  var tags = [];
+  var spoonURL = 'https://api.spoonacular.com/recipes/random?apiKey=cc3888f8468f4f98a6465b665303b10b&number=100&tags=';
 
-// function fetchRecipe (){
+  if (breakButton.className === "active"){
+    tags.push("breakfast,")
+  } else if (lunButton.className === "active"){
+    tags.push("lunch,")
+  } else if (dinButton.className === "active"){
+    tags.push("dinner,")
+  } else if (dessButton.className === "active"){
+    tags.push("dessert")
+  }
 
-//   fetch(spoonURL, {
-//     mode: 'cors',
-//     method: 'GET', //GET is the default.
-//     headers: headers
-//   })
-//     .then(function (response) {
-//       return response.json();
-//     })
-//     .then(function (data) {
-//       fetchResponse=data
-//     });
-// };
+  for (var i=0; i<tags.length; i++){
+    spoonURL = spoonURL + tags[i]
+  }
+  
+  fetch(spoonURL, {
+    mode: 'cors',
+    method: 'GET',
+    headers: headers
+  })
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      titleContainer.textContent = data.recipes[0].title;
+      summary.textContent = data.recipes[0].summary;
+      for (var i =0; i<data.recipes[0].extendedIngredients.length; i++){
+        ingredientsli.textContent = data.recipes[0].extendedIngredients[i].name;
+      }
+      recipeImg.textContent = data.recipes[0].image;
+    });
+};
 
-// var recipeIncr = 0;
+var recipeIncr = 0;
 // var currentRec = fetchResponse.recipe.recipeIncr
-
+ 
 
 
 
 //---RECIPE CARD FUNCTIONS---
 function nextRecipe() {
   recipeIncr ++
+  fetchRecipe()
 };
 
 function favRecipe() {
@@ -224,6 +220,7 @@ setupSubmitBtn.addEventListener("click", function(event) {
   user.username = usernameInput.value;
   console.log(user.username);
   showRecipeSwiper();
+  fetchRecipe();
 });
 
 //recipe card meal type restrictor
