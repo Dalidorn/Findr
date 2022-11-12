@@ -74,10 +74,10 @@
             <!-- this is where the selectors for meal type will go -->
             <header>
                 <ui id="toggleMenu">
-                    <button class="inactive">Breakfast</button>
-                    <button class="inactive">Lunch</button>
-                    <button class="inactive">Dinner</button>
-                    <button class="inactive">Dessert</button>
+                    <button class="inactive" id="breakfast">Breakfast</button>
+                    <button class="inactive" id="lunch">Lunch</button>
+                    <button class="inactive" id="dinner">Dinner</button>
+                    <button class="inactive" id="dessert">Dessert</button>
                 </ui>
             </header>
             
@@ -86,20 +86,14 @@
 
                 <card id="recipeDisplay" class="draggable">
                     <h2 id="recipeTitle">RECIPE NAME</h2>
-
+                    <img class="img" id="recipeImg"></img>
                 <!-- hide and display this div when more info is called -->
                     <div id="detailsBlock" class="invisible">
                         <h3>Ingredients List</h3>
-                        <ul id="ingredients">
-                            <li>Apple</li>
-                            <li>Banana</li>
-                            <li>Carrot</li>
-                        </ul>
-                    
+                            <ul id="ingredients"></ul>
                         <h3>Recipe Summary</h3>
-                        <p id="summary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit nam iure possimus voluptas eum aliquid veritatis numquam, voluptate, facere ad eius modi? Aliquam nihil sunt est odio quis sed eius!</p>
+                            <p id="summary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit nam iure possimus voluptas eum aliquid veritatis numquam, voluptate, facere ad eius modi? Aliquam nihil sunt est odio quis sed eius!</p>
                     </div>
-
                     <div>
                         <button id="recipeFav">Fav</button>
                         <button id="recipeNext">Next</button>
@@ -123,10 +117,10 @@
             <header>
                 <h2>Favorites List</h2>
                 <ui id="sortFav">
-                    <button class="inactive" id="breakfast">Breakfast</button>
-                    <button class="inactive" id="lunch">Lunch</button>
-                    <button class="inactive" id="dinner">Dinner</button>
-                    <button class="inactive" id="dessert">Dessert</button>
+                    <button class="inactive">Breakfast</button>
+                    <button class="inactive">Lunch</button>
+                    <button class="inactive">Dinner</button>
+                    <button class="inactive">Dessert</button>
                 </ui>
             </header>
 
