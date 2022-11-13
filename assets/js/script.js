@@ -10,8 +10,6 @@ console.log(decorativeCards);
 
 //buttons
 var setupSubmitBtn = document.querySelector("#setupSubmit");
-var recipeFavBtn = document.querySelector("#recipeFav");
-var recipeNextBtn = document.querySelector("#recipeNext");
 var favLinkBtn = document.querySelector("#favLink");
 var editDPBtn = document.querySelector("#editDP");
 var editDP2Btn = document.querySelector("#editDP2");
@@ -132,19 +130,20 @@ var recipeIncr = 0;
 //---RECIPE CARD FUNCTIONS---
 function nextRecipe() {
   recipeIncr ++
-  fetchRecipe()
+  // fetchRecipe()
+  console.log("SHOW " + recipeIncr + "RECIPE");
 };
 
 function favRecipe() {
-    var recipes=[]
-    var recipe={
-        ingredients:[ingredientsli[0].innerHTML,ingredientsli[1].innerHTML,ingredientsli[2].innerHTML],
-        summary:summary.innerHTML
-    }
-    console.log(recipe)
-    recipes.push(recipe)
-  //TODO: Add code to save the currently displayed recipe to local storage. Store entire recipe from get request so we can access those details later.
-  localStorage.setItem("favoriterecipes", JSON.stringify(recipes));
+    // var recipes=[];
+    // var recipe={
+    //     ingredients:[ingredientsli[0].innerHTML,ingredientsli[1].innerHTML,ingredientsli[2].innerHTML],
+    //     summary:summary.innerHTML
+    // };
+    // console.log(recipe);
+    // recipes.push(recipe);
+  // localStorage.setItem("favoriterecipes", JSON.stringify(recipes));
+  console.log("FAV THIS");
   nextRecipe();
 };
 
@@ -190,6 +189,7 @@ interact(".dropFav")
       position.x = 0;
       position.y = 0;
       event.relatedTarget.style.transform = `translate(${position.x}px, ${position.y}px)`;
+      favRecipe();
     },
     overlap: 0.01,
   });
@@ -202,6 +202,7 @@ interact(".dropNext")
       position.x = 0;
       position.y = 0;
       event.relatedTarget.style.transform = `translate(${position.x}px, ${position.y}px)`;
+      nextRecipe();
     },
     overlap: 0.01,
   });
@@ -213,9 +214,7 @@ setupSubmitBtn.addEventListener("click", handleSubmit);
 //recipe card meal type restrictor
 toggleMenu.addEventListener("click", toggleActive);
 
-//recipe card buttons
-recipeFavBtn.addEventListener("click", favRecipe);
-recipeNextBtn.addEventListener("click", nextRecipe);
+//recipe card effects
 recipeCard.addEventListener("dblclick", showRecipeDetails);
 
 //recipe page nav
@@ -241,9 +240,6 @@ function fakeFetch() {
     ingredientsli.appendChild(list);
   }
   recipeImg.src = data.recipes[0].image;
-  console.log(data.recipes[0].spoonacularSourceUrl)
-
-  console.log(localStorage.getItem("Response"));
 };
 
 
