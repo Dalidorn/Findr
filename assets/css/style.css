@@ -83,7 +83,14 @@
 .welcomeCards {
     display: flex;
 }
-
+img {
+    max-width: 40%;
+    height: auto;
+    border: 10px;
+    border-color: purple;
+    border-radius: 10%;
+    text-align: center;
+}
 h1 {
     font-size: 90px;
     background: -webkit-linear-gradient(50deg, #8A2387, #E94057, #F27121);
