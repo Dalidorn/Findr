@@ -274,7 +274,7 @@ footer {
 .recipeBlock card {
     display: flex;
     margin: 20px;
-    width: 75%;
+    width: 75vw;
     height: 90vh;
     text-align: center;
     background-image: url("../images/Fresh-Food-Placeholder.jpg");
@@ -284,6 +284,7 @@ footer {
     border: 3px solid white;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
 }
 
 

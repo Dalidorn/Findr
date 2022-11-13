@@ -85,7 +85,7 @@ function showFavoritesPage() {
   show(displayFavorites);
 };
 
-function fetchRecipe (){
+function fetchRecipeList (){
   var headers = {};
   var tags = [];
   var spoonURL = 'https://api.spoonacular.com/recipes/random?apiKey=cc3888f8468f4f98a6465b665303b10b&number=100&tags=';
@@ -113,11 +113,12 @@ function fetchRecipe (){
       return response.json();
     })
     .then(function (data) {
+      console.log(data + "OH SHIT IT PULLED AGAIN");
       titleContainer.textContent = data.recipes[0].title;
-      summary.textContent = data.recipes[0].summary;
+      summary.innerHTML = data.recipes[0].summary;
       for (var i =0; i<data.recipes[0].extendedIngredients.length; i++){
-        var list = data.recipes[0].extendedIngredients[i].original;
-        list = document.createElement('li');
+        var list = document.createElement('li');
+        list.innerHTML = data.recipes[0].extendedIngredients[i].original;
         ingredientsli.appendChild(list);
       }
       recipeImg.src = data.recipes[0].image;
@@ -126,9 +127,6 @@ function fetchRecipe (){
 };
 
 var recipeIncr = 0;
-// var currentRec = fetchResponse.recipe.recipeIncr
- 
-
 
 
 //---RECIPE CARD FUNCTIONS---
@@ -210,13 +208,7 @@ interact(".dropNext")
 
 //---EVENT LISTENERS---
 //welcome page
-setupSubmitBtn.addEventListener("click", function(event) {
-  event.preventDefault();
-  user.username = usernameInput.value;
-  console.log(user.username);
-  showRecipeSwiper();
-  fetchRecipe();
-});
+setupSubmitBtn.addEventListener("click", handleSubmit);
 
 //recipe card meal type restrictor
 toggleMenu.addEventListener("click", toggleActive);
@@ -238,3 +230,27 @@ editDP2Btn.addEventListener("click", showWelcomePage);
 recLinkBtn.addEventListener("click", showRecipeSwiper);
 
 showWelcomePage();
+
+function fakeFetch() {
+  var data = JSON.parse(localStorage.getItem("Response"));
+  titleContainer.textContent = data.recipes[0].title;
+  summary.innerHTML = data.recipes[0].summary;
+  for (var i =0; i<data.recipes[0].extendedIngredients.length; i++){
+    var list = document.createElement('li');
+    list.innerHTML = data.recipes[0].extendedIngredients[i].original;
+    ingredientsli.appendChild(list);
+  }
+  recipeImg.src = data.recipes[0].image;
+  console.log(data.recipes[0].spoonacularSourceUrl)
+
+  console.log(localStorage.getItem("Response"));
+};
+
+
+function handleSubmit(event) {
+event.preventDefault();
+  user.username = usernameInput.value;
+  console.log(user.username);
+  showRecipeSwiper(); //move into .then statement for load time and add transition screen
+  fakeFetch();
+}
