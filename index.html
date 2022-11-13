@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">   
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="./assets/css/reset.css">
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Finder</title>
@@ -18,67 +20,93 @@
             <button>It's my first time visiting. (clear and refresh)</button>
         </section>
         
-        <section class="displayWelcome">
+        <section class="displayPref">
             <header>
-                <h1 id="welcomeMessage">Welcome to Finder</h1>
+                <h1 id="welcomeMessage">Findr</h1>
             </header>
 
-            <main class="displaySetup">
-                <section>
-                    <form>
-                        <h2>Choose a username, enter an email, and select any dietary preferences below.</h2>
-                        <input type="text" name="username" placeholder="Username" id="usernameInput">
-                        <input type="text" name="email" placeholder="Email Address" id="userEmail">
-                        <ul class="dietaryRestrictions">
-                            <li><p>Vegan:</p><input type="checkbox" name="veganSelector"></li>
-                            <li><p>Vegetarian:</p><input type="checkbox" name="vegetarianSelector"></li>
-                            <li><p>Dairy Free:</p><input type="checkbox" name="dairySelector"></li>
-                            <li><p>Gluten Free:</p><input type="checkbox" name="glutenSelector"></li>
-                            <li><p>Keto Friendly:</p><input type="checkbox" name="ketoSelector"></li>
-                        </ul>
-                        <button id="setupSubmit">Submit</button>
-                    </form>
-                </section>
+            <main class="displayWelcome">
+                <div class="welcomeCardIntro">
+                    <h2>To get started, please enter the following information. You can make changes to these choices later on at anytime.</h2>
+                </div>
 
-                <div class="welcomeBackground">
-                    <div class="wbTop">
-                        <card>T1</card>
-                        <card>T2</card>
-                        <card>T3</card>
-                        <card>T4</card>
-                        <card>T5</card>
-                        <card>T6</card>
-                        <card>T7</card>
-                        <card>T8</card>
-                    </div>
-                    
-                    <div class="wbBottom">
-                        <card>B1</card>
-                        <card>B2</card>
-                        <card>B3</card>
-                        <card>B4</card>
-                        <card>B5</card>
-                        <card>B6</card>
-                        <card>B7</card>
-                        <card>B8</card>
-                    </div>
+                <div class="welcomeCards">
+                    <section class="displayRestrictions">
+                        <form>
+                            <h3>Dietary Restrictions</h3>
+                            <ul class="dietaryRestrictions">
+                                <li><p>Vegan:</p><input type="checkbox" name="veganSelector"></li>
+                                <li><p>Vegetarian:</p><input type="checkbox" name="vegetarianSelector"></li>
+                                <li><p>Dairy Free:</p><input type="checkbox" name="dairySelector"></li>
+                                <li><p>Gluten Free:</p><input type="checkbox" name="glutenSelector"></li>
+                                <li><p>Keto Friendly:</p><input type="checkbox" name="ketoSelector"></li>
+                            </ul>   
+                        </form>
+                    </section>
+
+                    <section class="displaySetup">
+                        <form>
+                            <h3>Name and Email</h3>
+                            <div class="inputBoxes">
+                                <input type="text" name="name" placeholder="Name" id="usernameInput">
+                                <input type="text" name="email" placeholder="Email Address" id="userEmail">
+                            </div>
+                            <p id="inputError">Error Text Here</p>
+                        </form>
+                    </section>
+
+                    <section class="mealTypes">
+                        <form>
+                            <h3>Meal Types</h3>
+                            <ul id="toggleMenu">
+                                <button class="inactive">Breakfast</button>
+                                <button class="inactive">Lunch</button>
+                                <button class="inactive">Dinner</button>
+                                <button class="inactive">Dessert</button>
+                            </ul>
+                        </form>
+                    </section>
+                </div>
+
+                <div class="welcomeCardButtons">
+                    <button id="setupSubmit">Submit</button>
+                    <button id="setupNext">Next</button>
                 </div>
             </main>
+            
+            <div class="welcomeBackground">
+                <div class="wbTop">
+                    <card class="decorative">T1</card>
+                    <card class="decorative">T2</card>
+                    <card class="decorative">T3</card>
+                    <card class="decorative">T4</card>
+                    <card class="decorative">T5</card>
+                    <card class="decorative">T6</card>
+                    <card class="decorative">T7</card>
+                    <card class="decorative">T8</card>
+                </div>
+
+                <div class="wbBottom">
+                    <card class="decorative">B1</card>
+                    <card class="decorative">B2</card>
+                    <card class="decorative">B3</card>
+                    <card class="decorative">B4</card>
+                    <card class="decorative">B5</card>
+                    <card class="decorative">B6</card>
+                    <card class="decorative">B7</card>
+                    <card class="decorative">B8</card>
+                </div>
+            </div>
 
             <footer>
 
             </footer>
         </section>
 
-        <section class="displayRecipeSwiper hidden">
+        <section class="displayRecipeSwiper">
             <!-- this is where the selectors for meal type will go -->
             <header>
-                <ui id="toggleMenu">
-                    <button class="inactive">Breakfast</button>
-                    <button class="inactive">Lunch</button>
-                    <button class="inactive">Dinner</button>
-                    <button class="inactive">Dessert</button>
-                </ui>
+                
             </header>
             
             <main class="recipeBlock">
@@ -119,15 +147,15 @@
             </footer>
         </section>
 
-        <section class="displayFavorites hidden">
+        <section class="displayFavorites">
             <header>
                 <h2>Favorites List</h2>
-                <ui id="sortFav">
+                <ul id="sortFav">
                     <button class="inactive" id="breakfast">Breakfast</button>
                     <button class="inactive" id="lunch">Lunch</button>
                     <button class="inactive" id="dinner">Dinner</button>
                     <button class="inactive" id="dessert">Dessert</button>
-                </ui>
+                </ul>
             </header>
 
             <main>

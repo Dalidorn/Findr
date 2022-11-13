@@ -11,6 +11,10 @@ var currentImage = "";
 var currentTitle = "This Random Dish";
 
 //---ELEMENT SELECTORS---
+//decorative
+var decorativeCards = document.querySelectorAll("card.decorative");
+console.log(decorativeCards);
+
 //buttons
 var setupSubmitBtn = document.querySelector("#setupSubmit");
 var recipeFavBtn = document.querySelector("#recipeFav");
@@ -24,6 +28,7 @@ var summary = document.querySelector("#summary")
 
 
 //pages
+var displayPref = document.querySelector(".displayPref");
 var displayWelcome = document.querySelector(".displayWelcome");
 var displayRecipeSwiper = document.querySelector(".displayRecipeSwiper");
 var displayFavorites = document.querySelector(".displayFavorites");
@@ -71,11 +76,11 @@ for (var i=0; i<tags.length; i++){
 
 //---GENERAL FUNCTIONS---
 function hide(variable) {
-  variable.className += " hidden";
+  variable.style = "display: none;";
 };
 
 function show(variable) {
-  variable.className -= " hidden";
+  variable.style = "";
 };
 
 function toggleActive(event) {
@@ -90,36 +95,30 @@ function toggleActive(event) {
 
 //---PAGE DISPLAY FUNCTIONS---
 function showWelcomePage() {
-  if(!displayRecipeSwiper.className.includes("hidden")) {
-    hide(displayRecipeSwiper);
-  };
-  if(!displayFavorites.className.includes("hidden")) {
-    hide(displayFavorites)
-  };
-  show(displayWelcome);
+  hide(displayRecipeSwiper);
+  hide(displayFavorites)
+  show(displayPref);
 };
 
 function showRecipeSwiper() {
-  if(!displayWelcome.className.includes("hidden")) {
-    hide(displayWelcome);
-  };
-  if(!displayFavorites.className.includes("hidden")) {
-    hide(displayFavorites)
-  };
+  hide(displayPref);
+  hide(displayFavorites)
   show(displayRecipeSwiper);
 };
 
 function showFavoritesPage() {
-  if(!displayRecipeSwiper.className.includes("hidden")) {
-    hide(displayRecipeSwiper);
-  };
-  if(!displayWelcome.className.includes("hidden")) {
-    hide(displayRecipeSwiper)
-  };
+  hide(displayRecipeSwiper);
+  hide(displayRecipeSwiper)
   show(displayFavorites);
 };
 
+function welcomeScreenAnimation() {
+decorativeCards.forEach(element => {
+      element.className += " active";
+  });
+};
 
+welcomeScreenAnimation();
 // function fetchRecipe (){
 
 //   fetch(spoonURL, {
@@ -186,7 +185,6 @@ object.draggable({
         `translate(${position.x}px, ${position.y}px)`
     },
   },
-  inertia: true,
   modifiers: [
     interact.modifiers.restrictRect({
       restriction: 'parent'
@@ -245,3 +243,5 @@ sortFavMenu.addEventListener("click", toggleActive);
 //favorites page nav
 editDP2Btn.addEventListener("click", showWelcomePage);
 recLinkBtn.addEventListener("click", showRecipeSwiper);
+
+showWelcomePage();

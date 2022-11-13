@@ -13,6 +13,7 @@
     overflow: hidden;
 }
 
+
 .invisible {
     visibility: hidden;
 }
@@ -22,13 +23,12 @@
 }
 
 .active {
-    background-color: #4b6cb7;
+    background-color: green;
 }
 
 .inactive {
-    background-color: #182848;
+    background-color: whitesmoke;
 }
-
 
 
 .backgroundGradient {
@@ -44,47 +44,87 @@
     flex-direction: column;
     justify-content: space-between;
     position:absolute;
-    top:-20px;
+    top:-60px;
     right:0px;
-    bottom:-20px;
+    bottom:-60px;
     left:0px;
 }
 
 .wbTop {
     display: flex;
-    justify-content: space-around;
 }
 
 .wbBottom {
     display: flex;
-    justify-content: space-around;
 }
 
 .welcomeBackground card {
-    width: 12%;
-    height: 30vh;
+    width: 10%;
+    margin: 0 1% 0 1%;
+    height: 25vh;
+    opacity: .2;
     border-radius: 40px;
     background-color: black;
+    transition: opacity 1s, height 2s, width 2s;
+}
+
+.welcomeBackground card:hover {
+    width: 12%;
+    height: 30vh;
+    opacity: 1;
+}
+
+.displayWelcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.welcomeCards {
+    display: flex;
 }
 
 h1 {
     font-size: 90px;
     background: -webkit-linear-gradient(50deg, #8A2387, #E94057, #F27121);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     z-index: 1;
 }
 
+h2 {
+    margin-bottom: 10px;
+    font-size: 25px;
+    color: white;
+}
+
 form {
+    min-width: 260px;
+    min-height: 260px;
+    max-width: 260px;
+    max-height: 260px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     background-color: rgb(236, 236, 236);
     border-radius: 20px;
     padding: 20px;
     color: black;
     box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
-    z-index: 1;
+}
+
+.welcomeCardIntro {
+    width: 60%;
+    text-align: center;
+    margin-bottom: 20px;
+    min-width: 260px;
+}
+
+.inputBoxes {
+    display: flex;
+    flex-direction: column;
 }
 
 input[type="text"] {
@@ -96,14 +136,14 @@ input[type="text"] {
     -webkit-appearance: none;
     border: 0;
     outline: 0;
-    border-radius: 20px;
+    border-radius: 10px;
     padding: 10px;
     background-color: rgb(248, 248, 248);
     text-shadow: 1px 1px 0 white;
     text-align: center;
     font-family: 'Acme', sans-serif;
     font-size: 20px;
-    margin: 10px;
+    margin-top: 10px;
 }
 
 input[type="text"]:focus {
@@ -111,9 +151,13 @@ input[type="text"]:focus {
     background-color: white;
 }
 
+#inputError {
+    visibility: hidden;
+}
+
 .dietaryRestrictions {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
 }
   
@@ -127,6 +171,7 @@ input[type="checkbox"] {
     margin:4px;
     background-color: white;
     transition:background-color 1s;
+    box-shadow:  inset 2px 2px 5px var(--shadows), inset -5px -5px 10px white;
 } 
    
 input:checked{
@@ -144,6 +189,7 @@ input::before{
     background-color:red;
     content:'';
     transition:width .5s;
+    box-shadow: 2px 2px rgb(187, 187, 187);
 }  
   
 input:checked::before {
@@ -152,10 +198,40 @@ input:checked::before {
     transition:width .5s;
     content:'';
     overflow:hidden; 
-} 
+}
+
+.welcomeCardButtons button {
+    width: 90px;
+    height: 45px;
+    border-radius: 10px;
+    background-color: whitesmoke;
+    border-color: gray;
+    font-family: 'Acme', sans-serif;
+    font-size: 18px;
+    border-width: 3px;
+}
+
+.mealTypes button {
+    width: 90px;
+    height: 90px;
+    margin: 5px;
+    border-radius: 15px;
+    border-width: 4px;
+    border-color:gray;
+    font-family: 'Acme', sans-serif;
+}
+
+ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 
 li {
     text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 section {
@@ -164,6 +240,7 @@ section {
     justify-content: space-between;
     width: 100%;
     align-items: center;
+    margin: 10px;
 }
 
 header {
@@ -175,6 +252,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
 }
 
 figure {
@@ -207,26 +285,48 @@ footer {
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
     /* make header and footer hidden for drag effects to reveal */
+    
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
+@media only screen and (max-width: 768px) {
     /* make footer hidden for drag effects */
+    h2 {
+        font-size: 20px;
+    }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
-    /* default */
+@media only screen and (max-width: 992px) {
+    .displaySetup {
+        display: flex;
+    }
+
+    .displayRestrictions {
+        display: none;
+    }
+
+    .mealTypes {
+        display: none;
+    }
+
+    #setupSubmit {
+        display: none;
+    }
+
+    #setupNext {
+        display: inline-block;
+    }
+
 }
 
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
+/* Large devices (laptops/desktops, 993px and up) */
+@media only screen and (min-width: 993px) {
     /* more info always displayed */
-}
 
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-    /* more info always displayed and show side bars */
+    #setupNext {
+        display: none;
+    }
 }
 
 
