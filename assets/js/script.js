@@ -1,12 +1,14 @@
 //---GLOBAL VARIABLES---
 var user = {
-  username: ""
+  username: "",
+  favorites: [{title: "banana"}, {title: "apple"}, {title: "carrot"}, {title: "guava"}]
 }
+
+var selectedFavs = [];
 
 //---ELEMENT SELECTORS---
 //decorative
 var decorativeCards = document.querySelectorAll("card.decorative");
-console.log(decorativeCards);
 
 //buttons
 var setupSubmitBtn = document.querySelector("#setupSubmit");
@@ -14,6 +16,7 @@ var favLinkBtn = document.querySelector("#favLink");
 var editDPBtn = document.querySelector("#editDP");
 var editDP2Btn = document.querySelector("#editDP2");
 var recLinkBtn = document.querySelector("#recLink");
+var emailBtn = document.querySelector("#emailBtn");
 
 //pages
 var displayPref = document.querySelector(".displayPref");
@@ -22,6 +25,7 @@ var displayRecipeSwiper = document.querySelector(".displayRecipeSwiper");
 var displayFavorites = document.querySelector(".displayFavorites");
 var detailsBlock = document.querySelector("#detailsBlock");
 var recipeCard = document.querySelector("#recipeDisplay");
+var favDisplayBlock = document.querySelector(".favDisplay");
 
 //nav menus
 var toggleMenu = document.querySelector("#toggleMenu");
@@ -67,20 +71,42 @@ function toggleActive(event) {
 //---PAGE DISPLAY FUNCTIONS---
 function showWelcomePage() {
   hide(displayRecipeSwiper);
-  hide(displayFavorites)
+  hide(displayFavorites);
   show(displayPref);
 };
 
 function showRecipeSwiper() {
   hide(displayPref);
-  hide(displayFavorites)
+  hide(displayFavorites);
   show(displayRecipeSwiper);
 };
 
 function showFavoritesPage() {
   hide(displayRecipeSwiper);
-  hide(displayRecipeSwiper)
+  hide(displayPref);
+  for(i=0; i<user.favorites.length; i++) {
+    tempCard = document.createElement("card");
+    tempCard.innerHTML = user.favorites[i].title;
+    tempCard.style = "background-color: red;";
+    tempCard.id = i;
+    tempCard.addEventListener("click", selectItem);
+    favDisplayBlock.appendChild(tempCard);
+  }
   show(displayFavorites);
+};
+
+function selectItem(event) {
+  event.target.classList.toggle("selected");
+  if(event.target.className == "selected") {
+    console.log("selected " + event.target.textContent);
+  } else {
+    console.log("unselected " + event.target.textContent);
+  }
+};
+
+function getSelected() {
+  document.querySelectorAll(".selected").forEach(fav => selectedFavs.push(user.favorites[fav.id]));
+  console.log(selectedFavs);
 };
 
 function fetchRecipeList (){
@@ -221,8 +247,9 @@ recipeCard.addEventListener("dblclick", showRecipeDetails);
 favLinkBtn.addEventListener("click", showFavoritesPage);
 editDPBtn.addEventListener("click", showWelcomePage);
 
-//favorites sorting
+//favorites
 sortFavMenu.addEventListener("click", toggleActive);
+emailBtn.addEventListener("click", getSelected);
 
 //favorites page nav
 editDP2Btn.addEventListener("click", showWelcomePage);
