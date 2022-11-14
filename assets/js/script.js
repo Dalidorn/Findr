@@ -179,7 +179,7 @@ function nextRecipe() {
   console.log("SHOW " + recipeIncr + "RECIPE");
 };
 
-function favRecipe() {
+function 6() {
     var recipes=[]
     var recipe={
         ingredients:[ingredientsli[0].innerHTML,ingredientsli[1].innerHTML,ingredientsli[2].innerHTML],
@@ -188,8 +188,9 @@ function favRecipe() {
     console.log(recipe)
     console.log(ingredientsli)
     recipes.push(recipe)
+    console.log(user)
   //TODO: Add code to save the currently displayed recipe to local storage. Store entire recipe from get request so we can access those details later.
-  localStorage.setItem("favoriterecipes", JSON.stringify(recipes));
+  localStorage.setItem("local data", JSON.stringify(user));
   nextRecipe();
 };
 
