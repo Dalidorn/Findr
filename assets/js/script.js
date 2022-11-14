@@ -187,11 +187,23 @@ function fetchRecipeList() {
     tags.push("dinner,")
   } else if (dessButton.className === "active"){
     tags.push("dessert")
-  }
+  };
+
+  if (document.getElementById("vegan").checked === true){
+    tags.push("vegan,");
+  } else if (document.getElementById("vegetarian").checked === true){
+    tags.push("vegetarian,");
+  } else if (document.getElementById("dairyFree").checked === true){
+    tags.push("dairy-free,");
+  } else if (document.getElementById("glutenFree").checked === true){
+    tags.push("gluten-free,");
+  } else if (document.getElementById("keto").checked === true){
+    tags.push("keto,");
+  };
 
   for (var i=0; i<tags.length; i++){
     spoonURL = spoonURL + tags[i]
-  }
+  };
   
   fetch(spoonURL, {
     mode: 'cors',
