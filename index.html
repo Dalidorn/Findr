@@ -12,7 +12,7 @@
     <title>Finder</title>
 </head>
 
-<body>
+<body class="doc">
     <div class="backgroundGradient">
         <section class="displayWarning hidden">
             <h2>Warning! This app uses local storage for it's memory.</h2>
@@ -104,19 +104,18 @@
         </section>
 
         <section class="displayRecipeSwiper">
-            <!-- this is where the selectors for meal type will go -->
             <header>
         
             </header>
             
             <main class="recipeBlock">
-                <figure class="dropNext">NEXT</figure>
+                <figure class="dropNext"></figure>
 
                 <card id="recipeDisplay" class="draggable">
                     <h2 id="recipeTitle">RECIPE NAME</h2>
                     <img class="img" id="recipeImg" alt="Oops! Image for food not found"></img>
                 <!-- hide and display this div when more info is called -->
-                    <p id="linkUrl" class="invisible">
+                    <p id="linkUrl detailsBlock" class="invisible">
 
                         <h3>Ingredients List</h3>
                             <ul id="ingredients"></ul>
@@ -125,14 +124,14 @@
                     </div>
                 </card>
 
-                <figure class="dropFav">FAVORITE</figure>
+                <figure class="dropFav"></figure>
             </main>
 
             <footer>
                 <nav>
                     <ui>
                         <button id="favLink">Favorites</button>
-                        <button id="editDP">Edit Dietary Preferences</button>
+                        <button id="editDP">Preferences</button>
                     </ui>
                 </nav>
             </footer>
@@ -141,17 +140,12 @@
         <section class="displayFavorites">
             <header>
                 <h2>Favorites List</h2>
-                <ul id="sortFav">
-                    <button class="inactive">Breakfast</button>
-                    <button class="inactive">Lunch</button>
-                    <button class="inactive">Dinner</button>
-                    <button class="inactive">Dessert</button>
-                </ul>
+                <button id="emailBtn">Email Me</button>
             </header>
 
             <main>
                 <section class="favDisplay">
-                    <button id="emailBtn">EMAIL ME</button>
+
                 </section>
             </main>
 
@@ -159,7 +153,7 @@
                 <nav>
                     <ui>
                         <button id="recLink">Recipes</button>
-                        <button id="editDP2">Edit Preferences</button>
+                        <button id="editDP2">Preferences</button>
                     </ui>
                 </nav>
             </footer>

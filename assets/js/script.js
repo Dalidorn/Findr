@@ -1,13 +1,18 @@
 //---GLOBAL VARIABLES---
 var user = {
   name: "",
-  favorites: [{title: "banana"}, {title: "apple"}, {title: "carrot"}, {title: "guava"}],
+  email: "",
+  favorites: [{title: "pineapple", image: "./assets/images/Fresh-Food-Placeholder.jpg"}, {title: "apple"}, {title: "carrot"}, {title: "guava"}, {title: "apple"}, {title: "apple"}, {title: "apple"}, {title: "apple"}, {title: "apple"}],
   preferences: []
 }
 
-var selectedFavs = [];
-
+//storing api reply
 var currentFetchData = "";
+
+//managing email api
+var selectedFavs = [];
+var emailBodyContent = "";
+var emailSubject = "Your Findr Recipes"
 
 //---ELEMENT SELECTORS---
 //decorative
@@ -36,7 +41,6 @@ var displayMealTypes = document.querySelector(".mealTypes");
 
 //nav menus
 var toggleMenu = document.querySelector("#toggleMenu");
-var sortFavMenu = document.querySelector("#sortFav");
 var breakButton = document.querySelector("#breakfast");
 var lunButton = document.querySelector("#lunch");
 var dinButton = document.querySelector("#dinner");
@@ -49,6 +53,7 @@ var ingredientsli = document.querySelector("#ingredients");
 
 //input
 var usernameInput = document.querySelector("#usernameInput");
+var emailInput = document.querySelector("#userEmail");
 var dietaryRestrictionToggle = document.querySelector(".dietaryRestrictions");
 
 
@@ -68,10 +73,12 @@ function show(variable) {
 };
 
 function toggleActive(event) {
-  if(event.target.className == "inactive") {
-  event.target.className = "active";
-  } else {
-  event.target.className = "inactive";
+  if(event.target.className != "") {
+      if(event.target.className == "inactive") {
+    event.target.className = "active";
+    } else {
+    event.target.className = "inactive";
+    };
   };
 };
 
@@ -103,10 +110,13 @@ function showRecipeSwiper() {
 function showFavoritesPage() {
   hide(displayRecipeSwiper);
   hide(displayPref);
+  while(favDisplayBlock.firstChild) {
+    favDisplayBlock.removeChild(favDisplayBlock.firstChild);
+  };
   for(i=0; i<user.favorites.length; i++) {
     tempCard = document.createElement("card");
     tempCard.innerHTML = user.favorites[i].title;
-    tempCard.style = "background-color: red;";
+    tempCard.style = `background-image: url(${user.favorites[i].image});`;
     tempCard.id = i;
     tempCard.addEventListener("click", selectItem);
     favDisplayBlock.appendChild(tempCard);
@@ -156,12 +166,24 @@ function sendMail(name, email, subject, message) {
 };
 
 function getSelected() {
-  document.querySelectorAll(".selected").forEach(fav => selectedFavs.push(user.favorites[fav.id]));
+  document.querySelectorAll(".selected").forEach(fav => {
+    selectedFavs.push(user.favorites[fav.id]);
+    fav.classList.toggle("selected");
+  });
   console.log(selectedFavs);
-  sendEmail
+  writeEmail();
+
 };
 
-function fetchRecipeList (){
+function writeEmail() {
+  emailBodyContent = `Hi ${user.name}! Thanks for using Findr! You requested the following recipes: `
+  for(i=0;i<selectedFavs.length; i++) {
+    emailBodyContent += selectedFavs[i].title + " - " + selectedFavs[i].sourceUrl + ". "
+  };
+  selectedFavs = [];
+};
+
+function fetchRecipeList() {
   var headers = {};
   var tags = [];
   var spoonURL = 'https://api.spoonacular.com/recipes/random?apiKey=cc3888f8468f4f98a6465b665303b10b&number=100&tags=';
@@ -261,10 +283,21 @@ function showRecipeDetails() {
 
 //---DRAG AND DROP FUNCTIONALITY---
 const position = { x: 0, y: 0 };
-var object = interact(".draggable");
 
+function handleDrop(event) {
+  event.relatedTarget.style.transition = "transform 0.5s";
+  console.log(event.relatedTarget.id + ' was dropped into ' + event.target.className)
+  position.x = 0;
+  position.y = 0;
+  event.relatedTarget.style.transform = `translate(${position.x}px, ${position.y}px)`;
+  if(event.target.className == "dropFav") {
+    favRecipe();
+  } else {
+    nextRecipe();
+  };
+};
 
-object.draggable({
+interact(".draggable").draggable({
   listeners: {
     start (event) {
       console.log(event.type)
@@ -283,33 +316,17 @@ object.draggable({
       restriction: 'parent'
     })
   ],
-})
+});
 
-interact(".dropFav")
-  .dropzone({
-    ondrop: function (event) {
-      event.relatedTarget.style.transition = "transform 0.5s";
-      console.log(event.relatedTarget.id + ' was dropped into ' + event.target.className)
-      position.x = 0;
-      position.y = 0;
-      event.relatedTarget.style.transform = `translate(${position.x}px, ${position.y}px)`;
-      favRecipe();
-    },
-    overlap: 0.01,
-  });
+interact(".dropFav").dropzone({
+  ondrop: handleDrop,
+  overlap: 0.01,
+});
 
-interact(".dropNext")
-  .dropzone({
-    ondrop: function (event) {
-      event.relatedTarget.style.transition = "transform 0.5s";
-      console.log(event.relatedTarget.id + ' was dropped into ' + event.target.className)
-      position.x = 0;
-      position.y = 0;
-      event.relatedTarget.style.transform = `translate(${position.x}px, ${position.y}px)`;
-      nextRecipe();
-    },
-    overlap: 0.01,
-  });
+interact(".dropNext").dropzone({
+  ondrop: handleDrop,
+  overlap: 0.01,
+});
 
 //---EVENT LISTENERS---
 //welcome page
@@ -327,7 +344,6 @@ favLinkBtn.addEventListener("click", showFavoritesPage);
 editDPBtn.addEventListener("click", showWelcomePage);
 
 //favorites
-sortFavMenu.addEventListener("click", toggleActive);
 emailBtn.addEventListener("click", getSelected);
 
 //favorites page nav
@@ -357,18 +373,19 @@ function resetNextDisplay() {
   }
 };
 
-
 function handleSubmit(event) {
   event.preventDefault();
   user.name = usernameInput.value;
-  console.log(user.name);
+  user.email = emailInput.value;
   for(i=0; i < 5; i++) { 
     if(dietaryRestrictionToggle.children[i].children[1].checked) {
       user.preferences.push(dietaryRestrictionToggle.children[i].children[0].textContent)
     };
   };
-  console.log(user.preferences);
+  console.log("Username: " + user.name + " Email: " + user.email + " Preferences: " + user.preferences + " - logged.");
   resetNextDisplay(); //resets the preferences display for smaller screens if needed.  
   showRecipeSwiper(); //move into .then statement for load time and add transition screen
   fakeFetch(); // replace this with real fetch later
-}
+  recipeIncr = -1;
+  nextRecipe();
+};
