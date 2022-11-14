@@ -28,7 +28,7 @@ var lunButton = document.querySelector("#lunch");
 var dinButton = document.querySelector("#dinner");
 var dessButton = document.querySelector("#dessert");
 var titleContainer = document.querySelector("#recipeTitle");
-var ingrContainer = document.getElementById("detailsBlock");
+var linkUrl = document.getElementById("linkUrl");
 var recipeImg = document.querySelector("#recipeImg");
 var summary = document.querySelector("#summary");
 var ingredientsli = document.querySelector("#ingredients");
@@ -98,13 +98,25 @@ function fetchRecipe (){
   var spoonURL = 'https://api.spoonacular.com/recipes/random?apiKey=cc3888f8468f4f98a6465b665303b10b&number=100&tags=';
 
   if (breakButton.className === "active"){
-    tags.push("breakfast,")
+    tags.push("breakfast,");
   } else if (lunButton.className === "active"){
-    tags.push("lunch,")
+    tags.push("lunch,");
   } else if (dinButton.className === "active"){
-    tags.push("dinner,")
+    tags.push("dinner,");
   } else if (dessButton.className === "active"){
-    tags.push("dessert")
+    tags.push("dessert,");
+  }
+
+  if (document.getElementById("vegan").checked === true){
+    tags.push("vegan,");
+  } else if (document.getElementById("vegetarian").checked === true){
+    tags.push("vegetarian,");
+  } else if (document.getElementById("dairyFree").checked === true){
+    tags.push("dairy-free,");
+  } else if (document.getElementById("glutenFree").checked === true){
+    tags.push("gluten-free,");
+  } else if (document.getElementById("keto").checked === true){
+    tags.push("keto,");
   }
 
   for (var i=0; i<tags.length; i++){
@@ -121,14 +133,10 @@ function fetchRecipe (){
     })
     .then(function (data) {
       titleContainer.textContent = data.recipes[0].title;
-      summary.textContent = data.recipes[0].summary;
-      for (var i =0; i<data.recipes[0].extendedIngredients.length; i++){
-        var list = data.recipes[0].extendedIngredients[i].original;
-        list = document.createElement('li');
-        ingredientsli.appendChild(list);
-      }
+      // summary.textContent = data.recipes[0].summary;
       recipeImg.src = data.recipes[0].image;
       console.log(data.recipes[0].spoonacularSourceUrl)
+      linkUrl.textContent = data.recipes[0].spoonacularSourceUrl
     });
 };
 
@@ -158,10 +166,10 @@ function favRecipe() {
 };
 
 function showRecipeDetails() {
-  if(detailsBlock.className == "invisible") {
-    detailsBlock.className = "";
+  if(linkUrl.className == "invisible") {
+    linkUrl.className = "";
   } else {
-    detailsBlock.className = "invisible"
+    linkUrl.className = "invisible"
   };
 };
 

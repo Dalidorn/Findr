@@ -28,11 +28,11 @@
                         <h2>Choose a username and select any dietary preferences below.</h2>
                         <input type="text" name="username" placeholder="Username" id="usernameInput">
                         <ul class="dietaryRestrictions">
-                            <li><p>Vegan:</p><input type="checkbox" name="veganSelector"></li>
-                            <li><p>Vegetarian:</p><input type="checkbox" name="vegetarianSelector"></li>
-                            <li><p>Dairy Free</p><input type="checkbox" name="dairySelector"></li>
-                            <li><p>Gluten Free</p><input type="checkbox" name="glutenSelector"></li>
-                            <li><p>Keto Friendly</p><input type="checkbox" name="ketoSelector"></li>
+                            <li><p>Vegan:</p><input type="checkbox" name="veganSelector" id="vegan"></li>
+                            <li><p>Vegetarian:</p><input type="checkbox" name="vegetarianSelector" id="vegetarian"></li>
+                            <li><p>Dairy Free</p><input type="checkbox" name="dairySelector" id="dairyFree"></li>
+                            <li><p>Gluten Free</p><input type="checkbox" name="glutenSelector" id="glutenFree"></li>
+                            <li><p>Keto Friendly</p><input type="checkbox" name="ketoSelector" id="keto"></li>
                         </ul>
                         <button id="setupSubmit">Submit</button>
                     </form>
@@ -60,14 +60,15 @@
 
                 <card id="recipeDisplay" class="draggable">
                     <h2 id="recipeTitle">RECIPE NAME</h2>
-                    <img class="img" id="recipeImg"></img>
+                    <img class="img" id="recipeImg" alt="Oops! Image for food not found"></img>
                 <!-- hide and display this div when more info is called -->
-                    <div id="detailsBlock" class="invisible">
-                        <h3>Ingredients List</h3>
+                    <p id="linkUrl" class="invisible">
+
+                        <!-- <h3>Ingredients List</h3>
                             <ul id="ingredients"></ul>
                         <h3>Recipe Summary</h3>
-                            <p id="summary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit nam iure possimus voluptas eum aliquid veritatis numquam, voluptate, facere ad eius modi? Aliquam nihil sunt est odio quis sed eius!</p>
-                    </div>
+                            <p id="summary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit nam iure possimus voluptas eum aliquid veritatis numquam, voluptate, facere ad eius modi? Aliquam nihil sunt est odio quis sed eius!</p> -->
+                    </p>
                     <div>
                         <button id="recipeFav">Fav</button>
                         <button id="recipeNext">Next</button>
