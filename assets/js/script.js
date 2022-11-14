@@ -46,7 +46,7 @@ var lunButton = document.querySelector("#lunch");
 var dinButton = document.querySelector("#dinner");
 var dessButton = document.querySelector("#dessert");
 var titleContainer = document.querySelector("#recipeTitle");
-var linkUrl = document.getElementById("#linkUrl");
+var ingrContainer = document.getElementById("detailsBlock");
 var recipeImg = document.querySelector("#recipeImg");
 var summary = document.querySelector("#summary");
 var ingredientsli = document.querySelector("#ingredients");
@@ -134,38 +134,6 @@ function selectItem(event) {
   }
 };
 
-function sendMail(name, email, subject, message) {
-  const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-  myHeaders.set('Authorization', 'Basic ' + base64.encode('79ba7f36f96cc9a660a18aa3ef398386'+":" +'6e949ee91b38ae3dc4d9609febb4a90e'));
-
-  const data = JSON.stringify({
-    "Messages": [{
-      "From": {"Email": "<YOUR EMAIL>", "Name": "<YOUR NAME>"},
-      "To": [{"Email": email, "Name": name}],
-      "Subject": subject,
-      "TextPart": message
-    }]
-  });
-
-  const requestOptions = {
-    method: 'POST',
-    headers: myHeaders,
-    body: data,
-  };
-
-  fetch("https://api.mailjet.com/v3.1/send", requestOptions)
-    .then(function(response){
-      return response.text()
-    })
-    .then(function(result){
-      return console.log(result)
-    })
-    .catch(function(error){
-      console.log('error',error);
-    })
-};
-
 function getSelected() {
   document.querySelectorAll(".selected").forEach(fav => {
     selectedFavs.push(user.favorites[fav.id]);
@@ -212,25 +180,13 @@ function fetchRecipeList() {
   var spoonURL = 'https://api.spoonacular.com/recipes/random?apiKey=cc3888f8468f4f98a6465b665303b10b&number=100&tags=';
 
   if (breakButton.className === "active"){
-    tags.push("breakfast,");
+    tags.push("breakfast,")
   } else if (lunButton.className === "active"){
-    tags.push("lunch,");
+    tags.push("lunch,")
   } else if (dinButton.className === "active"){
-    tags.push("dinner,");
+    tags.push("dinner,")
   } else if (dessButton.className === "active"){
-    tags.push("dessert,");
-  }
-
-  if (document.getElementById("vegan").checked === true){
-    tags.push("vegan,");
-  } else if (document.getElementById("vegetarian").checked === true){
-    tags.push("vegetarian,");
-  } else if (document.getElementById("dairyFree").checked === true){
-    tags.push("dairy-free,");
-  } else if (document.getElementById("glutenFree").checked === true){
-    tags.push("gluten-free,");
-  } else if (document.getElementById("keto").checked === true){
-    tags.push("keto,");
+    tags.push("dessert")
   }
 
   for (var i=0; i<tags.length; i++){
