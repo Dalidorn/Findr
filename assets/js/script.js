@@ -1,17 +1,22 @@
 //---GLOBAL VARIABLES---
 var user = {
   name: "",
-  favorites: [{title: "banana"}, {title: "apple"}, {title: "carrot"}, {title: "guava"}],
+  email: "",
+  favorites: [],
   preferences: []
 }
 
-var selectedFavs = [];
+//storing api reply
+var currentFetchData = JSON.parse(localStorage.getItem("Response"));
 
-var currentFetchData = "";
+//managing email api
+var selectedFavs = [];
+var emailBodyContent = "";
+var emailSubject = "Your Findr Recipes"
 
 //---ELEMENT SELECTORS---
 //decorative
-var decorativeCards = document.querySelectorAll("card.decorative");
+var decorativeCards = "";
 
 //buttons
 var setupNextBtn = document.querySelector("#setupNext");
@@ -36,7 +41,6 @@ var displayMealTypes = document.querySelector(".mealTypes");
 
 //nav menus
 var toggleMenu = document.querySelector("#toggleMenu");
-var sortFavMenu = document.querySelector("#sortFav");
 var breakButton = document.querySelector("#breakfast");
 var lunButton = document.querySelector("#lunch");
 var dinButton = document.querySelector("#dinner");
@@ -49,13 +53,15 @@ var ingredientsli = document.querySelector("#ingredients");
 
 //input
 var usernameInput = document.querySelector("#usernameInput");
+var emailInput = document.querySelector("#userEmail");
 var dietaryRestrictionToggle = document.querySelector(".dietaryRestrictions");
 
 
 //---LOCAL STORAGE CHECK---
-if(localStorage) {
-  //potential to show a modal if local storage is detected for easy clearing.
-  //TODO: Add code for what to do if the user already has stored data.
+if(localStorage.getItem("local storage")) {
+  user = JSON.parse(localStorage.getItem("local storage"));
+  usernameInput.value = user.name
+  emailInput.value = user.email
 };
 
 //---GENERAL FUNCTIONS---
@@ -68,10 +74,12 @@ function show(variable) {
 };
 
 function toggleActive(event) {
-  if(event.target.className == "inactive") {
-  event.target.className = "active";
-  } else {
-  event.target.className = "inactive";
+  if(event.target.className != "") {
+      if(event.target.className == "inactive") {
+    event.target.className = "active";
+    } else {
+    event.target.className = "inactive";
+    };
   };
 };
 
@@ -103,10 +111,13 @@ function showRecipeSwiper() {
 function showFavoritesPage() {
   hide(displayRecipeSwiper);
   hide(displayPref);
+  while(favDisplayBlock.firstChild) {
+    favDisplayBlock.removeChild(favDisplayBlock.firstChild);
+  };
   for(i=0; i<user.favorites.length; i++) {
     tempCard = document.createElement("card");
     tempCard.innerHTML = user.favorites[i].title;
-    tempCard.style = "background-color: red;";
+    tempCard.style = `background-image: url(${user.favorites[i].image});`;
     tempCard.id = i;
     tempCard.addEventListener("click", selectItem);
     favDisplayBlock.appendChild(tempCard);
@@ -124,11 +135,46 @@ function selectItem(event) {
 };
 
 function getSelected() {
-  document.querySelectorAll(".selected").forEach(fav => selectedFavs.push(user.favorites[fav.id]));
+  document.querySelectorAll(".selected").forEach(fav => {
+    selectedFavs.push(user.favorites[fav.id]);
+    fav.classList.toggle("selected");
+  });
   console.log(selectedFavs);
+  writeEmail();
 };
 
-function fetchRecipeList (){
+function writeEmail() {
+  emailBodyContent = `Hi ${user.name}! Thanks for using Findr! You requested the following recipes: `
+  for(i=0;i<selectedFavs.length; i++) {
+    emailBodyContent += selectedFavs[i].title + " - " + selectedFavs[i].sourceUrl + ". "
+  };
+  selectedFavs = [];
+  sendEmail(user.email, emailBodyContent);
+};
+
+function sendEmail(email, body) {
+  var data = {
+    service_id: "service_5h2t5mj",
+    template_id: "template_m74lv1q",
+    user_id: "CcaE2rPf19cvPouZ5",
+    template_params: {
+      'userEmail': email,
+      'message': body
+    }
+  };
+
+  fetch("https://api.emailjs.com/api/v1.0/email/send", {
+    mode: 'cors',
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {"Content-Type": 'application/json'}
+  })
+  .then(function(response){
+    console.log(response.json());
+  });
+};
+
+function fetchRecipeList() {
   var headers = {};
   var tags = [];
   var spoonURL = 'https://api.spoonacular.com/recipes/random?apiKey=cc3888f8468f4f98a6465b665303b10b&number=100&tags=';
@@ -141,11 +187,23 @@ function fetchRecipeList (){
     tags.push("dinner,")
   } else if (dessButton.className === "active"){
     tags.push("dessert")
-  }
+  };
+
+  if (document.getElementById("vegan").checked === true){
+    tags.push("vegan,");
+  } else if (document.getElementById("vegetarian").checked === true){
+    tags.push("vegetarian,");
+  } else if (document.getElementById("dairyFree").checked === true){
+    tags.push("dairy-free,");
+  } else if (document.getElementById("glutenFree").checked === true){
+    tags.push("gluten-free,");
+  } else if (document.getElementById("keto").checked === true){
+    tags.push("keto,");
+  };
 
   for (var i=0; i<tags.length; i++){
     spoonURL = spoonURL + tags[i]
-  }
+  };
   
   fetch(spoonURL, {
     mode: 'cors',
@@ -157,15 +215,9 @@ function fetchRecipeList (){
     })
     .then(function (data) {
       console.log(data);
-      titleContainer.textContent = data.recipes[0].title;
-      summary.innerHTML = data.recipes[0].summary;
-      for (var i =0; i<data.recipes[0].extendedIngredients.length; i++){
-        var list = document.createElement('li');
-        list.innerHTML = data.recipes[0].extendedIngredients[i].original;
-        ingredientsli.appendChild(list);
-      }
-      recipeImg.src = data.recipes[0].image;
-      console.log(data.recipes[0].spoonacularSourceUrl)
+      currentFetchData = data;
+      showRecipeSwiper();
+      nextRecipe();
     });
 };
 
@@ -175,22 +227,32 @@ var recipeIncr = 0;
 //---RECIPE CARD FUNCTIONS---
 function nextRecipe() {
   recipeIncr ++
-  // fetchRecipe()
+  while(ingredientsli.firstChild) {
+    ingredientsli.removeChild(ingredientsli.firstChild);
+  };
+  if(currentFetchData.recipes[recipeIncr] == null) {
+    titleContainer.textContent = "Out of Recipes! Please change your preferences to see more!"
+    recipeImg.src = "";
+    summary.innerHTML = "N/A";
+  } else {  
+  titleContainer.textContent = currentFetchData.recipes[recipeIncr].title;
+  summary.innerHTML = currentFetchData.recipes[recipeIncr].summary;
+  for (var i =0; i<currentFetchData.recipes[recipeIncr].extendedIngredients.length; i++){
+    var list = document.createElement('li');
+    list.innerHTML = currentFetchData.recipes[recipeIncr].extendedIngredients[i].original;
+    ingredientsli.appendChild(list);
+    }
+  recipeImg.src = currentFetchData.recipes[recipeIncr].image;
+  console.log(currentFetchData.recipes[recipeIncr].spoonacularSourceUrl)
+  // linkUrl.textContent = currentFetchData.recipes[recipeIncr].spoonacularSourceUrl
   console.log("SHOW " + recipeIncr + "RECIPE");
+  };
 };
 
-function 6() {
-    var recipes=[]
-    var recipe={
-        ingredients:[ingredientsli[0].innerHTML,ingredientsli[1].innerHTML,ingredientsli[2].innerHTML],
-        summary:summary.innerHTML
-    }
-    console.log(recipe)
-    console.log(ingredientsli)
-    recipes.push(recipe)
-    console.log(user)
-  //TODO: Add code to save the currently displayed recipe to local storage. Store entire recipe from get request so we can access those details later.
-  localStorage.setItem("local data", JSON.stringify(user));
+function favRecipe() {
+  user.favorites.push(currentFetchData.recipes[recipeIncr]);
+  localStorage.setItem("local storage", JSON.stringify(user));
+  console.log(user.favorites);
   nextRecipe();
 };
 
@@ -204,10 +266,21 @@ function showRecipeDetails() {
 
 //---DRAG AND DROP FUNCTIONALITY---
 const position = { x: 0, y: 0 };
-var object = interact(".draggable");
 
+function handleDrop(event) {
+  event.relatedTarget.style.transition = "transform 0.5s";
+  console.log(event.relatedTarget.id + ' was dropped into ' + event.target.className)
+  position.x = 0;
+  position.y = 0;
+  event.relatedTarget.style.transform = `translate(${position.x}px, ${position.y}px)`;
+  if(event.target.className == "dropFav") {
+    favRecipe();
+  } else {
+    nextRecipe();
+  };
+};
 
-object.draggable({
+interact(".draggable").draggable({
   listeners: {
     start (event) {
       console.log(event.type)
@@ -226,33 +299,17 @@ object.draggable({
       restriction: 'parent'
     })
   ],
-})
+});
 
-interact(".dropFav")
-  .dropzone({
-    ondrop: function (event) {
-      event.relatedTarget.style.transition = "transform 0.5s";
-      console.log(event.relatedTarget.id + ' was dropped into ' + event.target.className)
-      position.x = 0;
-      position.y = 0;
-      event.relatedTarget.style.transform = `translate(${position.x}px, ${position.y}px)`;
-      favRecipe();
-    },
-    overlap: 0.01,
-  });
+interact(".dropFav").dropzone({
+  ondrop: handleDrop,
+  overlap: 0.01,
+});
 
-interact(".dropNext")
-  .dropzone({
-    ondrop: function (event) {
-      event.relatedTarget.style.transition = "transform 0.5s";
-      console.log(event.relatedTarget.id + ' was dropped into ' + event.target.className)
-      position.x = 0;
-      position.y = 0;
-      event.relatedTarget.style.transform = `translate(${position.x}px, ${position.y}px)`;
-      nextRecipe();
-    },
-    overlap: 0.01,
-  });
+interact(".dropNext").dropzone({
+  ondrop: handleDrop,
+  overlap: 0.01,
+});
 
 //---EVENT LISTENERS---
 //welcome page
@@ -270,7 +327,6 @@ favLinkBtn.addEventListener("click", showFavoritesPage);
 editDPBtn.addEventListener("click", showWelcomePage);
 
 //favorites
-sortFavMenu.addEventListener("click", toggleActive);
 emailBtn.addEventListener("click", getSelected);
 
 //favorites page nav
@@ -278,18 +334,6 @@ editDP2Btn.addEventListener("click", showWelcomePage);
 recLinkBtn.addEventListener("click", showRecipeSwiper);
 
 showWelcomePage();
-
-function fakeFetch() {
-  var data = JSON.parse(localStorage.getItem("Response"));
-  titleContainer.textContent = data.recipes[0].title;
-  summary.innerHTML = data.recipes[0].summary;
-  for (var i =0; i<data.recipes[0].extendedIngredients.length; i++){
-    var list = document.createElement('li');
-    list.innerHTML = data.recipes[0].extendedIngredients[i].original;
-    ingredientsli.appendChild(list);
-  }
-  recipeImg.src = data.recipes[0].image;
-};
 
 function resetNextDisplay() {
   if(window.getComputedStyle(displayDietaryPref).display == "none") {
@@ -300,18 +344,17 @@ function resetNextDisplay() {
   }
 };
 
-
 function handleSubmit(event) {
   event.preventDefault();
   user.name = usernameInput.value;
-  console.log(user.name);
+  user.email = emailInput.value;
   for(i=0; i < 5; i++) { 
     if(dietaryRestrictionToggle.children[i].children[1].checked) {
       user.preferences.push(dietaryRestrictionToggle.children[i].children[0].textContent)
     };
   };
-  console.log(user.preferences);
+  console.log("Username: " + user.name + " Email: " + user.email + " Preferences: " + user.preferences + " - logged.");
   resetNextDisplay(); //resets the preferences display for smaller screens if needed.  
-  showRecipeSwiper(); //move into .then statement for load time and add transition screen
-  fakeFetch(); // replace this with real fetch later
-}
+  fetchRecipeList();
+  recipeIncr = -1;
+};

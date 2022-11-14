@@ -12,7 +12,7 @@
     <title>Finder</title>
 </head>
 
-<body>
+<body class="doc">
     <div class="backgroundGradient">
         <section class="displayWarning hidden">
             <h2>Warning! This app uses local storage for it's memory.</h2>
@@ -35,11 +35,11 @@
                         <form>
                             <h3>Dietary Restrictions</h3>
                             <ul class="dietaryRestrictions">
-                                <li><p>Vegan</p><input type="checkbox" name="veganSelector"></li>
-                                <li><p>Vegetarian</p><input type="checkbox" name="vegetarianSelector"></li>
-                                <li><p>Dairy Free</p><input type="checkbox" name="dairySelector"></li>
-                                <li><p>Gluten Free</p><input type="checkbox" name="glutenSelector"></li>
-                                <li><p>Keto Friendly</p><input type="checkbox" name="ketoSelector"></li>
+                                <li><p>Vegan</p><input type="checkbox" name="veganSelector" id="vegan"></li>
+                                <li><p>Vegetarian</p><input type="checkbox" name="vegetarianSelector" id="vegetarian"></li>
+                                <li><p>Dairy Free</p><input type="checkbox" name="dairySelector" id="dairyFree"></li>
+                                <li><p>Gluten Free</p><input type="checkbox" name="glutenSelector" id="glutenFree"></li>
+                                <li><p>Keto Friendly</p><input type="checkbox" name="ketoSelector" id="keto"></li>
                             </ul>   
                         </form>
                     </section>
@@ -104,34 +104,33 @@
         </section>
 
         <section class="displayRecipeSwiper">
-            <!-- this is where the selectors for meal type will go -->
             <header>
         
             </header>
             
             <main class="recipeBlock">
-                <figure class="dropNext">NEXT</figure>
+                <figure class="dropNext"></figure>
 
                 <card id="recipeDisplay" class="draggable">
                     <h2 id="recipeTitle">RECIPE NAME</h2>
                     <img class="img" id="recipeImg"></img>
-                <!-- hide and display this div when more info is called -->
                     <div id="detailsBlock" class="invisible">
                         <h3>Ingredients List</h3>
                             <ul id="ingredients"></ul>
                         <h3>Recipe Summary</h3>
                             <p id="summary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit nam iure possimus voluptas eum aliquid veritatis numquam, voluptate, facere ad eius modi? Aliquam nihil sunt est odio quis sed eius!</p>
+                            <p id="linkUrl"></p>
                     </div>
                 </card>
 
-                <figure class="dropFav">FAVORITE</figure>
+                <figure class="dropFav"></figure>
             </main>
 
             <footer>
                 <nav>
                     <ui>
                         <button id="favLink">Favorites</button>
-                        <button id="editDP">Edit Dietary Preferences</button>
+                        <button id="editDP">Preferences</button>
                     </ui>
                 </nav>
             </footer>
@@ -140,17 +139,12 @@
         <section class="displayFavorites">
             <header>
                 <h2>Favorites List</h2>
-                <ul id="sortFav">
-                    <button class="inactive">Breakfast</button>
-                    <button class="inactive">Lunch</button>
-                    <button class="inactive">Dinner</button>
-                    <button class="inactive">Dessert</button>
-                </ul>
+                <button id="emailBtn">Email Me</button>
             </header>
 
             <main>
                 <section class="favDisplay">
-                    <button id="emailBtn">EMAIL ME</button>
+
                 </section>
             </main>
 
@@ -158,7 +152,7 @@
                 <nav>
                     <ui>
                         <button id="recLink">Recipes</button>
-                        <button id="editDP2">Edit Preferences</button>
+                        <button id="editDP2">Preferences</button>
                     </ui>
                 </nav>
             </footer>
