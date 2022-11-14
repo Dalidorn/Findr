@@ -296,7 +296,7 @@ footer {
     width: 600px;
     height: 70vh;
     text-align: center;
-    background-image: url("../images/Fresh-Food-Placeholder.jpg");
+    background-image: linear-gradient(gray, black);
     background-size: cover;
     background-position: center;
     border-radius: 25px;
@@ -304,10 +304,14 @@ footer {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    font-size: 16px;
+    color: white;
+    text-shadow: black 1px 1px 1px;
 }
 
 .recipeBlock h2 {
     margin-top: 20px;
+    text-shadow: black 2px 2px 2px;
 }
 
 .displayFavorites header {
