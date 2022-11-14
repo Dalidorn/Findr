@@ -1,16 +1,20 @@
 //---GLOBAL VARIABLES---
 var user = {
-  username: "",
-  favorites: [{title: "banana"}, {title: "apple"}, {title: "carrot"}, {title: "guava"}]
+  name: "",
+  favorites: [{title: "banana"}, {title: "apple"}, {title: "carrot"}, {title: "guava"}],
+  preferences: []
 }
 
 var selectedFavs = [];
+
+var currentFetchData = "";
 
 //---ELEMENT SELECTORS---
 //decorative
 var decorativeCards = document.querySelectorAll("card.decorative");
 
 //buttons
+var setupNextBtn = document.querySelector("#setupNext");
 var setupSubmitBtn = document.querySelector("#setupSubmit");
 var favLinkBtn = document.querySelector("#favLink");
 var editDPBtn = document.querySelector("#editDP");
@@ -26,6 +30,9 @@ var displayFavorites = document.querySelector(".displayFavorites");
 var detailsBlock = document.querySelector("#detailsBlock");
 var recipeCard = document.querySelector("#recipeDisplay");
 var favDisplayBlock = document.querySelector(".favDisplay");
+var displayDietaryPref = document.querySelector(".displayRestrictions");
+var displayInputSetup = document.querySelector(".displaySetup");
+var displayMealTypes = document.querySelector(".mealTypes");
 
 //nav menus
 var toggleMenu = document.querySelector("#toggleMenu");
@@ -40,8 +47,10 @@ var recipeImg = document.querySelector("#recipeImg");
 var summary = document.querySelector("#summary");
 var ingredientsli = document.querySelector("#ingredients");
 
-//input fields
+//input
 var usernameInput = document.querySelector("#usernameInput");
+var dietaryRestrictionToggle = document.querySelector(".dietaryRestrictions");
+
 
 //---LOCAL STORAGE CHECK---
 if(localStorage) {
@@ -59,16 +68,26 @@ function show(variable) {
 };
 
 function toggleActive(event) {
-  if(event.target.className != "") {
-    if(event.target.className == "inactive") {
-    event.target.className = "active";
-    } else {
-    event.target.className = "inactive";
-    };
+  if(event.target.className == "inactive") {
+  event.target.className = "active";
+  } else {
+  event.target.className = "inactive";
   };
 };
 
 //---PAGE DISPLAY FUNCTIONS---
+function handleNext() {
+  if(window.getComputedStyle(displayInputSetup).display == "flex") {
+    displayInputSetup.style.display = "none";
+    displayDietaryPref.style.display = "flex";
+  } else {
+    displayDietaryPref.style.display = "none"
+    displayMealTypes.style.display = "flex";
+    setupNextBtn.style.display = "none";
+    setupSubmitBtn.style.display = "inline-block";
+  };
+};
+
 function showWelcomePage() {
   hide(displayRecipeSwiper);
   hide(displayFavorites);
@@ -137,7 +156,7 @@ function fetchRecipeList (){
       return response.json();
     })
     .then(function (data) {
-      console.log(data + "OH SHIT IT PULLED AGAIN");
+      console.log(data);
       titleContainer.textContent = data.recipes[0].title;
       summary.innerHTML = data.recipes[0].summary;
       for (var i =0; i<data.recipes[0].extendedIngredients.length; i++){
@@ -235,6 +254,7 @@ interact(".dropNext")
 
 //---EVENT LISTENERS---
 //welcome page
+setupNextBtn.addEventListener("click", handleNext)
 setupSubmitBtn.addEventListener("click", handleSubmit);
 
 //recipe card meal type restrictor
@@ -269,11 +289,27 @@ function fakeFetch() {
   recipeImg.src = data.recipes[0].image;
 };
 
+function resetNextDisplay() {
+  if(window.getComputedStyle(displayDietaryPref).display == "none") {
+    displayDietaryPref.style.display = "flex"
+    displayMealTypes.style.display = "none";
+    setupNextBtn.style.display = "inline-block";
+    setupSubmitBtn.style.display = "none";
+  }
+};
+
 
 function handleSubmit(event) {
-event.preventDefault();
-  user.username = usernameInput.value;
-  console.log(user.username);
+  event.preventDefault();
+  user.name = usernameInput.value;
+  console.log(user.name);
+  for(i=0; i < 5; i++) { 
+    if(dietaryRestrictionToggle.children[i].children[1].checked) {
+      user.preferences.push(dietaryRestrictionToggle.children[i].children[0].textContent)
+    };
+  };
+  console.log(user.preferences);
+  resetNextDisplay(); //resets the preferences display for smaller screens if needed.  
   showRecipeSwiper(); //move into .then statement for load time and add transition screen
-  fakeFetch();
+  fakeFetch(); // replace this with real fetch later
 }

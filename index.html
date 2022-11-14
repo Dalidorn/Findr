@@ -35,11 +35,11 @@
                         <form>
                             <h3>Dietary Restrictions</h3>
                             <ul class="dietaryRestrictions">
-                                <li><p>Vegan:</p><input type="checkbox" name="veganSelector"></li>
-                                <li><p>Vegetarian:</p><input type="checkbox" name="vegetarianSelector"></li>
-                                <li><p>Dairy Free:</p><input type="checkbox" name="dairySelector"></li>
-                                <li><p>Gluten Free:</p><input type="checkbox" name="glutenSelector"></li>
-                                <li><p>Keto Friendly:</p><input type="checkbox" name="ketoSelector"></li>
+                                <li><p>Vegan</p><input type="checkbox" name="veganSelector"></li>
+                                <li><p>Vegetarian</p><input type="checkbox" name="vegetarianSelector"></li>
+                                <li><p>Dairy Free</p><input type="checkbox" name="dairySelector"></li>
+                                <li><p>Gluten Free</p><input type="checkbox" name="glutenSelector"></li>
+                                <li><p>Keto Friendly</p><input type="checkbox" name="ketoSelector"></li>
                             </ul>   
                         </form>
                     </section>
@@ -59,10 +59,10 @@
                         <form>
                             <h3>Meal Types</h3>
                             <ul id="toggleMenu">
-                                <button class="inactive">Breakfast</button>
-                                <button class="inactive">Lunch</button>
-                                <button class="inactive">Dinner</button>
-                                <button class="inactive">Dessert</button>
+                                <button type="button" class="inactive" id="breakfast">Breakfast</button>
+                                <button type="button" class="inactive" id="lunch">Lunch</button>
+                                <button type="button" class="inactive" id="dinner">Dinner</button>
+                                <button type="button" class="inactive" id="dessert">Dessert</button>
                             </ul>
                         </form>
                     </section>
@@ -106,12 +106,7 @@
         <section class="displayRecipeSwiper">
             <!-- this is where the selectors for meal type will go -->
             <header>
-                <ui id="toggleMenu">
-                    <button class="inactive" id="breakfast">Breakfast</button>
-                    <button class="inactive" id="lunch">Lunch</button>
-                    <button class="inactive" id="dinner">Dinner</button>
-                    <button class="inactive" id="dessert">Dessert</button>
-                </ui>
+        
             </header>
             
             <main class="recipeBlock">
@@ -174,7 +169,3 @@
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
-
-
-
-
