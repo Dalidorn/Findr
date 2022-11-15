@@ -1,3 +1,4 @@
+/* ---GLOBAL USE--- */
 :root {
     --backgroundcolor: #d9dcd6;
     --alttextcolor: #ffffff;
@@ -40,6 +41,87 @@
     width: 100%;
 }
 
+/* ---GENERAL STYLES--- */
+img {
+    max-width: 40%;
+    height: auto;
+    border: 10px;
+    border-color: purple;
+    border-radius: 10%;
+    text-align: center;
+}
+h1 {
+    font-size: 90px;
+    background: -webkit-linear-gradient(50deg, #8A2387, #E94057, #F27121);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    z-index: 1;
+}
+
+h2 {
+    margin-bottom: 10px;
+    font-size: 25px;
+    color: white;
+}
+
+form {
+    min-width: 260px;
+    min-height: 260px;
+    max-width: 260px;
+    max-height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(236, 236, 236);
+    border-radius: 20px;
+    padding: 20px;
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+}
+
+ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+li {
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    margin: 10px;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+}
+
+main {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    z-index: 1;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+}
+
+/* ---WELCOME PAGE--- */
 .welcomeBackground {
     z-index: 0;
     display: flex;
@@ -86,44 +168,6 @@
     display: flex;
 }
 
-img {
-    max-width: 40%;
-    height: auto;
-    border: 10px;
-    border-color: purple;
-    border-radius: 10%;
-    text-align: center;
-}
-h1 {
-    font-size: 90px;
-    background: -webkit-linear-gradient(50deg, #8A2387, #E94057, #F27121);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    z-index: 1;
-}
-
-h2 {
-    margin-bottom: 10px;
-    font-size: 25px;
-    color: white;
-}
-
-form {
-    min-width: 260px;
-    min-height: 260px;
-    max-width: 260px;
-    max-height: 260px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgb(236, 236, 236);
-    border-radius: 20px;
-    padding: 20px;
-    color: black;
-    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
-}
 
 .welcomeCardIntro {
     width: 60%;
@@ -132,6 +176,12 @@ form {
     min-width: 260px;
 }
 
+.dietaryRestrictions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+/* text box styling */
 .inputBoxes {
     display: flex;
     flex-direction: column;
@@ -165,12 +215,7 @@ input[type="text"]:focus {
     visibility: hidden;
 }
 
-.dietaryRestrictions {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-  
+/* slider style checkboxes */
 input[type="checkbox"] { 
     appearance:none;
     outline:none;
@@ -211,6 +256,7 @@ input:checked::before {
     overflow:hidden; 
 }
 
+/* buttons */
 .welcomeCardButtons button {
     width: 90px;
     height: 45px;
@@ -234,41 +280,8 @@ input:checked::before {
     cursor: pointer;
 }
 
-ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-li {
-    text-align: center;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 100%;
-    align-items: center;
-    margin: 10px;
-}
-
-header {
-    display: flex;
-    justify-content: center;
-}
-
-main {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-    z-index: 1;
-}
-
+/* ---RECIPE PAGE--- */
+/* drop boxes */
 figure {
     width: 150px;
     height: 70vh;
@@ -285,11 +298,7 @@ figure {
     background-image: url("../images/fav-icon.svg");
 }
 
-footer {
-    display: flex;
-    justify-content: center;
-}
-
+/* card */
 .recipeBlock card {
     display: flex;
     margin: 20px;
@@ -314,6 +323,7 @@ footer {
     text-shadow: black 2px 2px 2px;
 }
 
+/* ---FAVORITES PAGE--- */
 .displayFavorites header {
     display: flex;
     flex-direction: column;
@@ -332,6 +342,7 @@ footer {
     cursor: pointer;
 }
 
+/* card container */
 .favDisplay {
     min-width: 95%;
     flex-direction: row;
@@ -341,6 +352,7 @@ footer {
 
 .favDisplay card {
     min-width: 175px;
+    max-width: 175px;
     min-height: 175px;
     background-size: cover;
     text-align: center;
@@ -350,12 +362,6 @@ footer {
 }
 
 /* ---MEDIA QUERY SECTION---
-
-/* Extra small devices */
-@media only screen and (max-width: 600px) {
-    /* make header and footer hidden for drag effects to reveal */
-    
-}
 
 /* Small devices */
 @media only screen and (max-width: 768px) {
@@ -393,15 +399,11 @@ footer {
 
     figure {
         width: 10%;
-    }
-
-    
+    } 
 }
 
 /* Large devices */
 @media only screen and (min-width: 993px) {
-    /* more info always displayed */
-
     #setupNext {
         display: none;
     }
